@@ -10,7 +10,7 @@ interface ProfileCardProps {
   heroName: string
   location: string
   category: string
-  status: "review" | "claimed" | "approved" | "scheduled" | "published"
+  status: "draft" | "review" | "claimed" | "story_submitted" | "ai_generated" | "approved" | "scheduled" | "published"
   createdAt: string
   imageUrl?: string
   onAction?: () => void

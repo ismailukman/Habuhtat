@@ -1,5 +1,15 @@
 {
   "projects": {
     "default": "habuhtat"
-  }
+  },
+  "targets": {
+    "habuhtat": {
+      "hosting": {
+        "habuhtat": [
+          "habuhtat"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }

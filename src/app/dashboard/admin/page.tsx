@@ -1,89 +1,114 @@
 "use client"
 
+import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
 import Link from "next/link"
 import {
-  FileText,
   CheckCircle,
   Clock,
   Calendar,
   Users,
   Sparkles,
   ArrowRight,
-  TrendingUp,
-  Eye,
-  Share2,
 } from "lucide-react"
+import { Timestamp } from "firebase/firestore"
 import { Sidebar } from "@/components/dashboard/sidebar"
 import { StatsCard } from "@/components/dashboard/stats-card"
 import { MotionButton } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
+import { getAllAIContent, getAllHeroes, getDashboardStats, AIContent, HeroProfile } from "@/lib/firebase"
 
-const stats = [
-  { title: "Pending Review", value: 12, icon: Clock, color: "amber" as const, change: "+4 today", changeType: "neutral" as const },
-  { title: "AI Generated", value: 8, icon: Sparkles, color: "purple" as const },
-  { title: "Approved", value: 24, icon: CheckCircle, color: "emerald" as const },
-  { title: "Scheduled", value: 6, icon: Calendar, color: "blue" as const },
-]
+type AdminStats = {
+  pendingReview: number
+  aiGenerated: number
+  approved: number
+  scheduled: number
+  published: number
+  totalUsers: number
+  ambassadors: number
+  journalists: number
+}
 
-const reviewQueue = [
-  {
-    id: "1",
-    heroName: "Maria Santos",
-    journalist: "Sarah Chen",
-    type: "Full Story",
-    submittedAt: "2 hours ago",
-    priority: "high",
-  },
-  {
-    id: "2",
-    heroName: "Ahmed Hassan",
-    journalist: "James Okonkwo",
-    type: "Full Story",
-    submittedAt: "5 hours ago",
-    priority: "medium",
-  },
-  {
-    id: "3",
-    heroName: "Yuki Tanaka",
-    journalist: "Elena Rodriguez",
-    type: "Profile Update",
-    submittedAt: "1 day ago",
-    priority: "low",
-  },
-]
+const formatDate = (timestamp?: Timestamp) => {
+  if (!timestamp) return "Unknown date"
+  return timestamp.toDate().toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  })
+}
 
-const aiContent = [
-  {
-    id: "1",
-    heroName: "Maria Santos",
-    platform: "Twitter",
-    variant: "Thread (5 tweets)",
-    status: "pending",
-  },
-  {
-    id: "2",
-    heroName: "Maria Santos",
-    platform: "Instagram",
-    variant: "Carousel Caption",
-    status: "approved",
-  },
-  {
-    id: "3",
-    heroName: "Ahmed Hassan",
-    platform: "LinkedIn",
-    variant: "Article Summary",
-    status: "pending",
-  },
-]
-
-const upcomingPublish = [
-  { heroName: "Kofi Mensah", platform: "All Platforms", date: "Today, 2:00 PM", status: "ready" },
-  { heroName: "Priya Sharma", platform: "Twitter, Instagram", date: "Tomorrow, 10:00 AM", status: "ready" },
-  { heroName: "John Okafor", platform: "LinkedIn", date: "Jan 22, 9:00 AM", status: "pending" },
-]
+const getPriority = (timestamp?: Timestamp) => {
+  if (!timestamp) return "medium"
+  const daysAgo = (Date.now() - timestamp.toDate().getTime()) / (1000 * 60 * 60 * 24)
+  if (daysAgo > 7) return "high"
+  if (daysAgo > 2) return "medium"
+  return "low"
+}
 
 export default function AdminDashboard() {
+  const [dashboardStats, setDashboardStats] = useState<AdminStats | null>(null)
+  const [reviewQueue, setReviewQueue] = useState<HeroProfile[]>([])
+  const [aiContent, setAiContent] = useState<AIContent[]>([])
+  const [upcomingPublish, setUpcomingPublish] = useState<HeroProfile[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const loadDashboard = async () => {
+      setLoading(true)
+      try {
+        const [statsData, heroes, content] = await Promise.all([
+          getDashboardStats("admin"),
+          getAllHeroes(),
+          getAllAIContent(),
+        ])
+
+        const reviewItems = heroes.filter((hero) =>
+          ["story_submitted", "review"].includes(hero.status)
+        )
+        const scheduledItems = heroes.filter((hero) => hero.status === "scheduled")
+
+        setDashboardStats(statsData as AdminStats)
+        setReviewQueue(reviewItems.slice(0, 3))
+        setAiContent(content.slice(0, 3))
+        setUpcomingPublish(scheduledItems.slice(0, 3))
+      } catch (err) {
+        console.error("Failed to load admin dashboard", err)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    loadDashboard()
+  }, [])
+
+  const stats = [
+    {
+      title: "Pending Review",
+      value: dashboardStats?.pendingReview ?? 0,
+      icon: Clock,
+      color: "amber" as const,
+    },
+    {
+      title: "AI Generated",
+      value: dashboardStats?.aiGenerated ?? 0,
+      icon: Sparkles,
+      color: "purple" as const,
+    },
+    {
+      title: "Approved",
+      value: dashboardStats?.approved ?? 0,
+      icon: CheckCircle,
+      color: "emerald" as const,
+    },
+    {
+      title: "Scheduled",
+      value: dashboardStats?.scheduled ?? 0,
+      icon: Calendar,
+      color: "blue" as const,
+    },
+  ]
+
   return (
     <div className="flex min-h-screen bg-slate-950">
       <Sidebar role="admin" />
@@ -134,31 +159,42 @@ export default function AdminDashboard() {
               </Link>
             </div>
             <div className="divide-y divide-slate-700">
-              {reviewQueue.map((item) => (
-                <div key={item.id} className="p-4 hover:bg-slate-800/50 transition-colors">
-                  <div className="flex items-center justify-between mb-2">
-                    <h3 className="font-medium text-white">{item.heroName}</h3>
-                    <Badge
-                      variant={
-                        item.priority === "high"
-                          ? "danger"
-                          : item.priority === "medium"
-                          ? "warning"
-                          : "secondary"
-                      }
-                    >
-                      {item.priority}
-                    </Badge>
+              {loading && (
+                <div className="p-4 text-sm text-slate-400">Loading review queue...</div>
+              )}
+              {!loading && reviewQueue.length === 0 && (
+                <div className="p-4 text-sm text-slate-400">No items awaiting review.</div>
+              )}
+              {reviewQueue.map((item) => {
+                const submittedAt = item.storySubmittedAt || item.updatedAt
+                const priority = getPriority(submittedAt)
+                const type = item.status === "story_submitted" ? "Full Story" : "Profile Review"
+                return (
+                  <div key={item.id} className="p-4 hover:bg-slate-800/50 transition-colors">
+                    <div className="flex items-center justify-between mb-2">
+                      <h3 className="font-medium text-white">{item.heroName}</h3>
+                      <Badge
+                        variant={
+                          priority === "high"
+                            ? "danger"
+                            : priority === "medium"
+                            ? "warning"
+                            : "secondary"
+                        }
+                      >
+                        {priority}
+                      </Badge>
+                    </div>
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-slate-400">by {item.journalistName || "Unassigned"}</span>
+                      <span className="text-slate-500">{formatDate(submittedAt)}</span>
+                    </div>
+                    <div className="mt-2">
+                      <Badge variant="secondary">{type}</Badge>
+                    </div>
                   </div>
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-slate-400">by {item.journalist}</span>
-                    <span className="text-slate-500">{item.submittedAt}</span>
-                  </div>
-                  <div className="mt-2">
-                    <Badge variant="secondary">{item.type}</Badge>
-                  </div>
-                </div>
-              ))}
+                )
+              })}
             </div>
           </motion.div>
 
@@ -182,20 +218,32 @@ export default function AdminDashboard() {
               </Link>
             </div>
             <div className="divide-y divide-slate-700">
-              {aiContent.map((item) => (
-                <div key={item.id} className="p-4 hover:bg-slate-800/50 transition-colors">
-                  <div className="flex items-center justify-between mb-2">
-                    <h3 className="font-medium text-white">{item.heroName}</h3>
-                    <Badge variant={item.status === "approved" ? "approved" : "review"}>
-                      {item.status}
-                    </Badge>
+              {loading && (
+                <div className="p-4 text-sm text-slate-400">Loading AI content...</div>
+              )}
+              {!loading && aiContent.length === 0 && (
+                <div className="p-4 text-sm text-slate-400">No AI content yet.</div>
+              )}
+              {aiContent.map((item) => {
+                const statusVariant =
+                  item.status === "approved"
+                    ? "approved"
+                    : item.status === "rejected"
+                    ? "danger"
+                    : "review"
+                return (
+                  <div key={item.id} className="p-4 hover:bg-slate-800/50 transition-colors">
+                    <div className="flex items-center justify-between mb-2">
+                      <h3 className="font-medium text-white">{item.heroName}</h3>
+                      <Badge variant={statusVariant}>{item.status}</Badge>
+                    </div>
+                    <div className="flex items-center gap-4 text-sm">
+                      <span className="text-purple-400">{item.platform}</span>
+                      <span className="text-slate-400">{item.contentType}</span>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-4 text-sm">
-                    <span className="text-purple-400">{item.platform}</span>
-                    <span className="text-slate-400">{item.variant}</span>
-                  </div>
-                </div>
-              ))}
+                )
+              })}
             </div>
           </motion.div>
         </div>
@@ -221,24 +269,31 @@ export default function AdminDashboard() {
           </div>
           <div className="p-4">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {upcomingPublish.map((item, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.6 + index * 0.1 }}
-                  className="p-4 rounded-lg bg-slate-900/50 border border-slate-700"
-                >
-                  <div className="flex items-center justify-between mb-2">
-                    <h3 className="font-medium text-white">{item.heroName}</h3>
-                    <Badge variant={item.status === "ready" ? "approved" : "warning"}>
-                      {item.status}
-                    </Badge>
-                  </div>
-                  <p className="text-sm text-slate-400 mb-1">{item.platform}</p>
-                  <p className="text-sm text-blue-400">{item.date}</p>
-                </motion.div>
-              ))}
+              {loading && (
+                <div className="text-sm text-slate-400">Loading schedule...</div>
+              )}
+              {!loading && upcomingPublish.length === 0 && (
+                <div className="text-sm text-slate-400">No scheduled publications yet.</div>
+              )}
+              {upcomingPublish.map((item, index) => {
+                const scheduledDate = item.scheduledFor || item.updatedAt
+                return (
+                  <motion.div
+                    key={item.id}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.6 + index * 0.1 }}
+                    className="p-4 rounded-lg bg-slate-900/50 border border-slate-700"
+                  >
+                    <div className="flex items-center justify-between mb-2">
+                      <h3 className="font-medium text-white">{item.heroName}</h3>
+                      <Badge variant="approved">scheduled</Badge>
+                    </div>
+                    <p className="text-sm text-slate-400 mb-1">{item.category}</p>
+                    <p className="text-sm text-blue-400">{formatDate(scheduledDate)}</p>
+                  </motion.div>
+                )
+              })}
             </div>
           </div>
         </motion.div>
@@ -253,40 +308,40 @@ export default function AdminDashboard() {
           <div className="p-6 rounded-xl bg-gradient-to-br from-emerald-500/10 to-emerald-600/10 border border-emerald-500/20">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 rounded-lg bg-emerald-500/20 flex items-center justify-center">
-                <TrendingUp className="w-5 h-5 text-emerald-400" />
+                <Users className="w-5 h-5 text-emerald-400" />
               </div>
               <div>
-                <div className="text-2xl font-bold text-white">1.2M</div>
-                <div className="text-sm text-slate-400">Total Reach This Month</div>
+                <div className="text-2xl font-bold text-white">{dashboardStats?.totalUsers ?? 0}</div>
+                <div className="text-sm text-slate-400">Total Users</div>
               </div>
             </div>
-            <div className="text-emerald-400 text-sm">+24% from last month</div>
+            <div className="text-emerald-400 text-sm">All active roles</div>
           </div>
 
           <div className="p-6 rounded-xl bg-gradient-to-br from-blue-500/10 to-blue-600/10 border border-blue-500/20">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center">
-                <Eye className="w-5 h-5 text-blue-400" />
+                <Users className="w-5 h-5 text-blue-400" />
               </div>
               <div>
-                <div className="text-2xl font-bold text-white">45K</div>
-                <div className="text-sm text-slate-400">Story Views Today</div>
+                <div className="text-2xl font-bold text-white">{dashboardStats?.ambassadors ?? 0}</div>
+                <div className="text-sm text-slate-400">Ambassadors</div>
               </div>
             </div>
-            <div className="text-blue-400 text-sm">Peak hour: 2:00 PM</div>
+            <div className="text-blue-400 text-sm">Field submissions</div>
           </div>
 
           <div className="p-6 rounded-xl bg-gradient-to-br from-purple-500/10 to-purple-600/10 border border-purple-500/20">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 rounded-lg bg-purple-500/20 flex items-center justify-center">
-                <Share2 className="w-5 h-5 text-purple-400" />
+                <Users className="w-5 h-5 text-purple-400" />
               </div>
               <div>
-                <div className="text-2xl font-bold text-white">892</div>
-                <div className="text-sm text-slate-400">Social Shares Today</div>
+                <div className="text-2xl font-bold text-white">{dashboardStats?.journalists ?? 0}</div>
+                <div className="text-sm text-slate-400">Journalists</div>
               </div>
             </div>
-            <div className="text-purple-400 text-sm">Top: Maria Santos story</div>
+            <div className="text-purple-400 text-sm">Active storytellers</div>
           </div>
         </motion.div>
       </main>

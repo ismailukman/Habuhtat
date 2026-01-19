@@ -1,68 +1,133 @@
 "use client"
 
+import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
 import Link from "next/link"
 import { FileText, CheckCircle, Clock, Send, Search, ArrowRight, TrendingUp } from "lucide-react"
+import { Timestamp } from "firebase/firestore"
 import { Sidebar } from "@/components/dashboard/sidebar"
 import { StatsCard } from "@/components/dashboard/stats-card"
 import { ProfileCard } from "@/components/dashboard/profile-card"
 import { MotionButton, Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { useAuth } from "@/lib/auth-context"
+import {
+  claimHeroProfile,
+  getAvailableHeroes,
+  getClaimedHeroesByJournalist,
+  getDashboardStats,
+  HeroProfile,
+} from "@/lib/firebase"
 
-const stats = [
-  { title: "Available Profiles", value: 28, icon: FileText, color: "emerald" as const, change: "+5 new", changeType: "positive" as const },
-  { title: "My Claims", value: 4, icon: Clock, color: "blue" as const },
-  { title: "Stories Submitted", value: 8, icon: Send, color: "purple" as const },
-  { title: "Published", value: 6, icon: CheckCircle, color: "amber" as const },
-]
+type JournalistStats = {
+  availableProfiles: number
+  myClaims: number
+  storiesSubmitted: number
+  published: number
+}
 
-const availableProfiles = [
-  {
-    id: "1",
-    heroName: "Elena Rodriguez",
-    location: "Costa Rica",
-    category: "Wildlife Conservation",
-    status: "review" as const,
-    createdAt: "1 day ago",
-  },
-  {
-    id: "2",
-    heroName: "Ahmed Hassan",
-    location: "Cairo, Egypt",
-    category: "Solar Energy",
-    status: "review" as const,
-    createdAt: "2 days ago",
-  },
-  {
-    id: "3",
-    heroName: "Yuki Tanaka",
-    location: "Tokyo, Japan",
-    category: "Urban Farming",
-    status: "review" as const,
-    createdAt: "3 days ago",
-  },
-]
-
-const myClaims = [
-  {
-    id: "4",
-    heroName: "Maria Santos",
-    location: "Amazon Rainforest, Brazil",
-    category: "Reforestation",
-    status: "claimed" as const,
-    createdAt: "5 days ago",
-  },
-  {
-    id: "5",
-    heroName: "John Okafor",
-    location: "Lagos, Nigeria",
-    category: "Plastic Recycling",
-    status: "claimed" as const,
-    createdAt: "1 week ago",
-  },
-]
+const formatDate = (timestamp?: Timestamp) => {
+  if (!timestamp) return "Unknown date"
+  return timestamp.toDate().toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  })
+}
 
 export default function JournalistDashboard() {
+  const { profile } = useAuth()
+  const [dashboardStats, setDashboardStats] = useState<JournalistStats | null>(null)
+  const [availableProfiles, setAvailableProfiles] = useState<HeroProfile[]>([])
+  const [myClaims, setMyClaims] = useState<HeroProfile[]>([])
+  const [loading, setLoading] = useState(true)
+  const [claimingId, setClaimingId] = useState<string | null>(null)
+  const [searchQuery, setSearchQuery] = useState("")
+
+  useEffect(() => {
+    if (!profile) {
+      setLoading(false)
+      return
+    }
+
+    const loadDashboard = async () => {
+      setLoading(true)
+      try {
+        const [statsData, available, claims] = await Promise.all([
+          getDashboardStats("journalist", profile.uid),
+          getAvailableHeroes(),
+          getClaimedHeroesByJournalist(profile.uid),
+        ])
+        setDashboardStats(statsData as JournalistStats)
+        setAvailableProfiles(available)
+        setMyClaims(claims)
+      } catch (err) {
+        console.error("Failed to load journalist dashboard", err)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    loadDashboard()
+  }, [profile])
+
+  const handleClaim = async (heroId: string) => {
+    if (!profile) return
+    setClaimingId(heroId)
+    try {
+      await claimHeroProfile(heroId, profile.uid, profile.name || profile.email || "Journalist")
+      const [available, claims, statsData] = await Promise.all([
+        getAvailableHeroes(),
+        getClaimedHeroesByJournalist(profile.uid),
+        getDashboardStats("journalist", profile.uid),
+      ])
+      setAvailableProfiles(available)
+      setMyClaims(claims)
+      setDashboardStats(statsData as JournalistStats)
+    } catch (err) {
+      console.error("Failed to claim hero profile", err)
+    } finally {
+      setClaimingId(null)
+    }
+  }
+
+  const stats = [
+    {
+      title: "Available Profiles",
+      value: dashboardStats?.availableProfiles ?? 0,
+      icon: FileText,
+      color: "emerald" as const,
+    },
+    {
+      title: "My Claims",
+      value: dashboardStats?.myClaims ?? 0,
+      icon: Clock,
+      color: "blue" as const,
+    },
+    {
+      title: "Stories Submitted",
+      value: dashboardStats?.storiesSubmitted ?? 0,
+      icon: Send,
+      color: "purple" as const,
+    },
+    {
+      title: "Published",
+      value: dashboardStats?.published ?? 0,
+      icon: CheckCircle,
+      color: "amber" as const,
+    },
+  ]
+
+  const normalizedQuery = searchQuery.trim().toLowerCase()
+  const filteredProfiles = availableProfiles.filter((profile) => {
+    if (!normalizedQuery) return true
+    return (
+      profile.heroName.toLowerCase().includes(normalizedQuery) ||
+      profile.location.toLowerCase().includes(normalizedQuery) ||
+      profile.category.toLowerCase().includes(normalizedQuery)
+    )
+  })
+
   return (
     <div className="flex min-h-screen bg-slate-950">
       <Sidebar role="journalist" />
@@ -91,6 +156,8 @@ export default function JournalistDashboard() {
               <Input
                 placeholder="Search profiles by name, location, or category..."
                 className="pl-12 h-12"
+                value={searchQuery}
+                onChange={(event) => setSearchQuery(event.target.value)}
               />
             </div>
             <Button variant="outline" className="h-12 px-6">
@@ -137,6 +204,12 @@ export default function JournalistDashboard() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {loading && (
+                <div className="text-slate-400 text-sm">Loading your claims...</div>
+              )}
+              {!loading && myClaims.length === 0 && (
+                <div className="text-slate-400 text-sm">You have no active claims yet.</div>
+              )}
               {myClaims.map((claim, index) => (
                 <motion.div
                   key={claim.id}
@@ -145,8 +218,13 @@ export default function JournalistDashboard() {
                   transition={{ delay: 0.4 + index * 0.1 }}
                 >
                   <ProfileCard
-                    {...claim}
-                    onAction={() => {}}
+                    id={claim.id}
+                    heroName={claim.heroName}
+                    location={claim.location}
+                    category={claim.category}
+                    status={claim.status}
+                    createdAt={formatDate(claim.createdAt)}
+                    imageUrl={claim.imageUrl}
                     actionLabel="Continue"
                   />
                 </motion.div>
@@ -178,7 +256,13 @@ export default function JournalistDashboard() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {availableProfiles.map((profile, index) => (
+            {loading && (
+              <div className="text-slate-400 text-sm">Loading available profiles...</div>
+            )}
+            {!loading && filteredProfiles.length === 0 && (
+              <div className="text-slate-400 text-sm">No profiles match your search.</div>
+            )}
+            {filteredProfiles.map((profile, index) => (
               <motion.div
                 key={profile.id}
                 initial={{ opacity: 0, y: 20 }}
@@ -186,9 +270,15 @@ export default function JournalistDashboard() {
                 transition={{ delay: 0.6 + index * 0.1 }}
               >
                 <ProfileCard
-                  {...profile}
-                  onAction={() => {}}
-                  actionLabel="Claim"
+                  id={profile.id}
+                  heroName={profile.heroName}
+                  location={profile.location}
+                  category={profile.category}
+                  status={profile.status}
+                  createdAt={formatDate(profile.createdAt)}
+                  imageUrl={profile.imageUrl}
+                  onAction={() => handleClaim(profile.id)}
+                  actionLabel={claimingId === profile.id ? "Claiming..." : "Claim"}
                 />
               </motion.div>
             ))}

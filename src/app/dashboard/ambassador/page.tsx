@@ -1,48 +1,95 @@
 "use client"
 
+import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
 import Link from "next/link"
 import { Upload, FileText, CheckCircle, Clock, Plus, ArrowRight } from "lucide-react"
+import { Timestamp } from "firebase/firestore"
 import { Sidebar } from "@/components/dashboard/sidebar"
 import { StatsCard } from "@/components/dashboard/stats-card"
 import { ProfileCard } from "@/components/dashboard/profile-card"
 import { MotionButton } from "@/components/ui/button"
+import { useAuth } from "@/lib/auth-context"
+import { getDashboardStats, getHeroesByAmbassador, HeroProfile } from "@/lib/firebase"
 
-const stats = [
-  { title: "Total Submissions", value: 12, icon: FileText, color: "emerald" as const, change: "+3 this week", changeType: "positive" as const },
-  { title: "Under Review", value: 4, icon: Clock, color: "amber" as const },
-  { title: "Approved", value: 6, icon: CheckCircle, color: "blue" as const },
-  { title: "Published", value: 2, icon: Upload, color: "purple" as const },
-]
+type AmbassadorStats = {
+  totalSubmissions: number
+  underReview: number
+  claimed: number
+  approved: number
+  published: number
+}
 
-const recentSubmissions = [
-  {
-    id: "1",
-    heroName: "Maria Santos",
-    location: "Amazon Rainforest, Brazil",
-    category: "Reforestation",
-    status: "review" as const,
-    createdAt: "2 days ago",
-  },
-  {
-    id: "2",
-    heroName: "Kofi Mensah",
-    location: "Accra, Ghana",
-    category: "Ocean Cleanup",
-    status: "approved" as const,
-    createdAt: "1 week ago",
-  },
-  {
-    id: "3",
-    heroName: "Priya Sharma",
-    location: "Mumbai, India",
-    category: "Air Quality",
-    status: "published" as const,
-    createdAt: "2 weeks ago",
-  },
-]
+const formatDate = (timestamp?: Timestamp) => {
+  if (!timestamp) return "Unknown date"
+  return timestamp.toDate().toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  })
+}
 
 export default function AmbassadorDashboard() {
+  const { profile } = useAuth()
+  const [dashboardStats, setDashboardStats] = useState<AmbassadorStats | null>(null)
+  const [recentSubmissions, setRecentSubmissions] = useState<HeroProfile[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (!profile) {
+      setLoading(false)
+      return
+    }
+
+    const loadDashboard = async () => {
+      setLoading(true)
+      setError(null)
+      try {
+        const [statsData, heroes] = await Promise.all([
+          getDashboardStats("ambassador", profile.uid),
+          getHeroesByAmbassador(profile.uid),
+        ])
+        setDashboardStats(statsData as AmbassadorStats)
+        setRecentSubmissions(heroes.slice(0, 3))
+      } catch (err) {
+        console.error("Failed to load ambassador dashboard", err)
+        setError("Unable to load your dashboard data right now.")
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    loadDashboard()
+  }, [profile])
+
+  const stats = [
+    {
+      title: "Total Submissions",
+      value: dashboardStats?.totalSubmissions ?? 0,
+      icon: FileText,
+      color: "emerald" as const,
+    },
+    {
+      title: "Under Review",
+      value: dashboardStats?.underReview ?? 0,
+      icon: Clock,
+      color: "amber" as const,
+    },
+    {
+      title: "Approved",
+      value: dashboardStats?.approved ?? 0,
+      icon: CheckCircle,
+      color: "blue" as const,
+    },
+    {
+      title: "Published",
+      value: dashboardStats?.published ?? 0,
+      icon: Upload,
+      color: "purple" as const,
+    },
+  ]
+
   return (
     <div className="flex min-h-screen bg-slate-950">
       <Sidebar role="ambassador" />
@@ -54,7 +101,9 @@ export default function AmbassadorDashboard() {
           animate={{ opacity: 1, y: 0 }}
           className="mb-8"
         >
-          <h1 className="text-3xl font-bold text-white mb-2">Welcome back, Ambassador!</h1>
+          <h1 className="text-3xl font-bold text-white mb-2">
+            Welcome back{profile?.name ? `, ${profile.name}` : ", Ambassador"}!
+          </h1>
           <p className="text-slate-400">Discover and share the stories of local environmental heroes.</p>
         </motion.div>
 
@@ -82,6 +131,12 @@ export default function AmbassadorDashboard() {
             </div>
           </Link>
         </motion.div>
+
+        {error && (
+          <div className="mb-6 rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-200">
+            {error}
+          </div>
+        )}
 
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
@@ -114,6 +169,14 @@ export default function AmbassadorDashboard() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {loading && (
+              <div className="text-slate-400 text-sm">Loading recent submissions...</div>
+            )}
+            {!loading && recentSubmissions.length === 0 && (
+              <div className="text-slate-400 text-sm">
+                No submissions yet. Upload your first hero profile to get started.
+              </div>
+            )}
             {recentSubmissions.map((submission, index) => (
               <motion.div
                 key={submission.id}
@@ -122,8 +185,13 @@ export default function AmbassadorDashboard() {
                 transition={{ delay: 0.4 + index * 0.1 }}
               >
                 <ProfileCard
-                  {...submission}
-                  onAction={() => {}}
+                  id={submission.id}
+                  heroName={submission.heroName}
+                  location={submission.location}
+                  category={submission.category}
+                  status={submission.status}
+                  createdAt={formatDate(submission.createdAt)}
+                  imageUrl={submission.imageUrl}
                   actionLabel="View"
                 />
               </motion.div>

@@ -32,6 +32,12 @@ const badgeVariants = cva(
           "bg-gradient-to-r from-purple-500/20 to-pink-500/20 text-purple-400 border border-purple-500/30",
         published:
           "bg-gradient-to-r from-emerald-500/20 to-teal-500/20 text-emerald-400 border border-emerald-500/30 shadow-lg shadow-emerald-500/10",
+        draft:
+          "bg-slate-700/50 text-slate-300 border border-slate-600/60",
+        story_submitted:
+          "bg-gradient-to-r from-amber-500/20 to-orange-500/20 text-amber-400 border border-amber-500/30",
+        ai_generated:
+          "bg-gradient-to-r from-purple-500/20 to-indigo-500/20 text-purple-400 border border-purple-500/30",
       },
     },
     defaultVariants: {
