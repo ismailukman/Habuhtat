@@ -140,79 +140,125 @@ export default function LandingPage() {
 
         <motion.div
           style={{ y: heroY, opacity: heroOpacity }}
-          className="relative z-10 max-w-5xl mx-auto px-6 text-center"
+          className="relative z-10 max-w-6xl mx-auto px-6 grid gap-12 lg:grid-cols-[1.1fr_0.9fr] items-center"
         >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5 }}
-            className="inline-block mb-6 px-4 py-2 bg-sky-100 border border-sky-200 rounded-full"
-          >
-            <span className="text-sky-700 font-semibold flex items-center gap-2">
-              <Globe className="w-4 h-4" />
-              Amplifying Impact Heroes
-            </span>
-          </motion.div>
+          <div className="text-center lg:text-left">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
+              className="inline-block mb-6 px-4 py-2 bg-sky-100 border border-sky-200 rounded-full"
+            >
+              <span className="text-sky-700 font-semibold flex items-center gap-2">
+                <Globe className="w-4 h-4" />
+                Amplifying Impact Heroes
+              </span>
+            </motion.div>
 
-          <TypewriterEffect
-            words={[
-              { text: "Every", className: "text-5xl md:text-6xl lg:text-7xl font-bold" },
-              { text: "Hero", className: "text-5xl md:text-6xl lg:text-7xl font-bold text-sky-600" },
-              { text: "Has", className: "text-5xl md:text-6xl lg:text-7xl font-bold" },
-              { text: "a", className: "text-5xl md:text-6xl lg:text-7xl font-bold" },
-              { text: "Story.", className: "text-5xl md:text-6xl lg:text-7xl font-bold text-sky-600" },
-            ]}
-          />
+            <TypewriterEffect
+              words={[
+                { text: "Every", className: "text-5xl md:text-6xl lg:text-7xl font-bold" },
+                { text: "Hero", className: "text-5xl md:text-6xl lg:text-7xl font-bold text-sky-600" },
+                { text: "Has", className: "text-5xl md:text-6xl lg:text-7xl font-bold" },
+                { text: "a", className: "text-5xl md:text-6xl lg:text-7xl font-bold" },
+                { text: "Story.", className: "text-5xl md:text-6xl lg:text-7xl font-bold text-sky-600" },
+              ]}
+            />
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.5 }}
-            className="text-lg md:text-xl text-slate-600 mb-10 max-w-3xl mx-auto mt-6"
-          >
-            Connecting grassroots leaders across environment, health, medicine, culture, social impact,
-            and entrepreneurship with global audiences through AI-powered storytelling and human curation.
-          </motion.p>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 0.5 }}
+              className="text-lg md:text-xl text-slate-600 mb-10 max-w-2xl mt-6"
+            >
+              Connecting grassroots leaders across environment, health, medicine, culture, social impact,
+              and entrepreneurship with global audiences through AI-powered storytelling and human curation.
+            </motion.p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7, duration: 0.5 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4"
-          >
-            <Link href="/signup">
-              <MotionButton size="xl" className="group">
-                Start Sharing Stories
-                <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
-              </MotionButton>
-            </Link>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.7, duration: 0.5 }}
+              className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4"
+            >
+              <Link href="/signup">
+                <MotionButton size="xl" className="group">
+                  Start Sharing Stories
+                  <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+                </MotionButton>
+              </Link>
 
-            <Link href="#how-it-works">
-              <MotionButton variant="outline" size="xl">
-                Learn More
-              </MotionButton>
-            </Link>
-          </motion.div>
+              <Link href="#how-it-works">
+                <MotionButton variant="outline" size="xl">
+                  Learn More
+                </MotionButton>
+              </Link>
+            </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1, duration: 0.5 }}
-            className="mt-16 flex flex-wrap items-center justify-center gap-8 md:gap-12 text-sm text-slate-500"
-          >
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-sky-500 animate-pulse" />
-              <span>500+ Heroes Featured</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span>50+ Journalists</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse" />
-              <span>1M+ Global Reach</span>
-            </div>
-          </motion.div>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1, duration: 0.5 }}
+              className="mt-16 flex flex-wrap items-center justify-center lg:justify-start gap-8 text-sm text-slate-500"
+            >
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-sky-500 animate-pulse" />
+                <span>500+ Heroes Featured</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                <span>50+ Journalists</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse" />
+                <span>1M+ Global Reach</span>
+              </div>
+            </motion.div>
+          </div>
+
+          <div className="relative">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="relative rounded-3xl border border-slate-200 bg-white/80 shadow-xl p-6 backdrop-blur"
+            >
+              <div className="absolute -top-6 -left-6 w-20 h-20 rounded-2xl bg-gradient-to-br from-sky-500 to-sky-600 shadow-lg shadow-sky-200/70 flex items-center justify-center text-white font-semibold">
+                H
+              </div>
+              <div className="pt-6">
+                <p className="text-xs uppercase tracking-widest text-slate-500">Featured Story</p>
+                <h3 className="text-2xl font-semibold text-slate-900 mt-3">Community Health Hero</h3>
+                <p className="text-slate-600 mt-4">
+                  Dr. Laila brought mobile care to rural families, boosting vaccination coverage across 16 villages.
+                </p>
+                <div className="mt-6 flex items-center gap-3 text-sm text-slate-500">
+                  <span className="px-3 py-1 rounded-full bg-sky-100 text-sky-700">Health</span>
+                  <span className="px-3 py-1 rounded-full bg-emerald-100 text-emerald-700">Impact</span>
+                </div>
+              </div>
+            </motion.div>
+
+            <motion.div
+              animate={{ y: [0, -10, 0] }}
+              transition={{ repeat: Infinity, duration: 5 }}
+              className="absolute -bottom-6 -left-6 rounded-2xl bg-white border border-slate-200 shadow-lg p-4 w-44"
+            >
+              <p className="text-xs text-slate-500">Next Up</p>
+              <p className="text-sm font-semibold text-slate-900 mt-2">Culture & Heritage</p>
+              <p className="text-xs text-slate-500 mt-2">120 stories preserved</p>
+            </motion.div>
+
+            <motion.div
+              animate={{ y: [0, 12, 0] }}
+              transition={{ repeat: Infinity, duration: 6 }}
+              className="absolute -top-6 right-0 rounded-2xl bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-lg p-4 w-40"
+            >
+              <p className="text-xs uppercase tracking-widest text-emerald-50">Live Reach</p>
+              <p className="text-2xl font-semibold mt-2">1.2M</p>
+              <p className="text-xs text-emerald-50 mt-2">views this month</p>
+            </motion.div>
+          </div>
         </motion.div>
 
         <motion.div
