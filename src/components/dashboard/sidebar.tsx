@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
 import {
   LayoutDashboard,
+  Home,
   Upload,
   FileText,
   Users,
@@ -26,12 +27,14 @@ interface SidebarProps {
 
 const menuItems = {
   ambassador: [
+    { icon: Home, label: "Home", href: "/" },
     { icon: LayoutDashboard, label: "Dashboard", href: "/dashboard/ambassador" },
     { icon: Upload, label: "Upload Profile", href: "/dashboard/ambassador/upload" },
     { icon: FileText, label: "My Submissions", href: "/dashboard/ambassador/submissions" },
     { icon: Settings, label: "Settings", href: "/dashboard/ambassador/settings" },
   ],
   journalist: [
+    { icon: Home, label: "Home", href: "/" },
     { icon: LayoutDashboard, label: "Dashboard", href: "/dashboard/journalist" },
     { icon: FileText, label: "Available Profiles", href: "/dashboard/journalist/profiles" },
     { icon: Users, label: "My Claims", href: "/dashboard/journalist/claims" },
@@ -39,6 +42,7 @@ const menuItems = {
     { icon: Settings, label: "Settings", href: "/dashboard/journalist/settings" },
   ],
   admin: [
+    { icon: Home, label: "Home", href: "/" },
     { icon: LayoutDashboard, label: "Dashboard", href: "/dashboard/admin" },
     { icon: FileText, label: "Review Queue", href: "/dashboard/admin/review" },
     { icon: Sparkles, label: "AI Content", href: "/dashboard/admin/ai-content" },
