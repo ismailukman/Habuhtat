@@ -29,28 +29,14 @@ const menuItems = {
   ambassador: [
     { icon: Home, label: "Home", href: "/" },
     { icon: LayoutDashboard, label: "Dashboard", href: "/dashboard/ambassador" },
-    { icon: Upload, label: "Upload Profile", href: "/dashboard/ambassador/upload" },
-    { icon: FileText, label: "My Submissions", href: "/dashboard/ambassador/submissions" },
-    { icon: Settings, label: "Settings", href: "/dashboard/ambassador/settings" },
   ],
   journalist: [
     { icon: Home, label: "Home", href: "/" },
     { icon: LayoutDashboard, label: "Dashboard", href: "/dashboard/journalist" },
-    { icon: FileText, label: "Available Profiles", href: "/dashboard/journalist/profiles" },
-    { icon: Users, label: "My Claims", href: "/dashboard/journalist/claims" },
-    { icon: Upload, label: "Submit Story", href: "/dashboard/journalist/submit" },
-    { icon: Settings, label: "Settings", href: "/dashboard/journalist/settings" },
   ],
   admin: [
     { icon: Home, label: "Home", href: "/" },
     { icon: LayoutDashboard, label: "Dashboard", href: "/dashboard/admin" },
-    { icon: FileText, label: "Review Queue", href: "/dashboard/admin/review" },
-    { icon: Sparkles, label: "AI Content", href: "/dashboard/admin/ai-content" },
-    { icon: CheckCircle, label: "Approved", href: "/dashboard/admin/approved" },
-    { icon: Calendar, label: "Schedule", href: "/dashboard/admin/schedule" },
-    { icon: BarChart3, label: "Analytics", href: "/dashboard/admin/analytics" },
-    { icon: Users, label: "Users", href: "/dashboard/admin/users" },
-    { icon: Settings, label: "Settings", href: "/dashboard/admin/settings" },
   ],
 }
 
