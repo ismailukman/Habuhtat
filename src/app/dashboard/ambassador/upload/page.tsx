@@ -42,6 +42,11 @@ const CATEGORY_OPTIONS = [
   "Sustainable Agriculture",
   "Ocean Cleanup",
   "Climate Education",
+  "Public Health",
+  "Community Medicine",
+  "Social Innovation",
+  "Cultural Preservation",
+  "Entrepreneurship",
   "Other",
 ]
 
@@ -121,7 +126,7 @@ export default function AmbassadorHeroUploadPage() {
   }
 
   return (
-    <div className="flex min-h-screen bg-slate-950">
+    <div className="flex min-h-screen bg-slate-50">
       <Sidebar role="ambassador" />
 
       <main className="flex-1 p-6 md:p-8 overflow-auto">
@@ -130,9 +135,9 @@ export default function AmbassadorHeroUploadPage() {
           animate={{ opacity: 1, y: 0 }}
           className="mb-8"
         >
-          <h1 className="text-3xl font-bold text-white mb-2">Upload Hero Profile</h1>
-          <p className="text-slate-400">
-            Share a new environmental hero story with the Habuhtat team.
+          <h1 className="text-3xl font-bold text-slate-900 mb-2">Upload Hero Profile</h1>
+          <p className="text-slate-600">
+            Share a new local hero story with the Habuhtat team.
           </p>
         </motion.div>
 
@@ -149,14 +154,14 @@ export default function AmbassadorHeroUploadPage() {
                 </div>
               )}
               {success && (
-                <div className="rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-200">
+                <div className="rounded-lg border border-sky-200 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-200">
                   {success}
                 </div>
               )}
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="text-sm text-slate-300">Hero Name *</label>
+                  <label className="text-sm text-slate-700">Hero Name *</label>
                   <Input
                     value={formState.heroName}
                     onChange={(event) => handleChange("heroName", event.target.value)}
@@ -164,11 +169,11 @@ export default function AmbassadorHeroUploadPage() {
                   />
                 </div>
                 <div>
-                  <label className="text-sm text-slate-300">Category *</label>
+                  <label className="text-sm text-slate-700">Category *</label>
                   <select
                     value={formState.category}
                     onChange={(event) => handleChange("category", event.target.value)}
-                    className="mt-1 w-full rounded-lg border border-slate-700 bg-slate-900 px-4 py-2 text-sm text-slate-50"
+                    className="mt-1 w-full rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm text-slate-50"
                   >
                     <option value="">Select a category</option>
                     {CATEGORY_OPTIONS.map((option) => (
@@ -179,7 +184,7 @@ export default function AmbassadorHeroUploadPage() {
                   </select>
                 </div>
                 <div>
-                  <label className="text-sm text-slate-300">Location *</label>
+                  <label className="text-sm text-slate-700">Location *</label>
                   <Input
                     value={formState.location}
                     onChange={(event) => handleChange("location", event.target.value)}
@@ -187,7 +192,7 @@ export default function AmbassadorHeroUploadPage() {
                   />
                 </div>
                 <div>
-                  <label className="text-sm text-slate-300">Country *</label>
+                  <label className="text-sm text-slate-700">Country *</label>
                   <Input
                     value={formState.country}
                     onChange={(event) => handleChange("country", event.target.value)}
@@ -197,30 +202,30 @@ export default function AmbassadorHeroUploadPage() {
               </div>
 
               <div>
-                <label className="text-sm text-slate-300">Summary</label>
+                <label className="text-sm text-slate-700">Summary</label>
                 <textarea
                   value={formState.summary}
                   onChange={(event) => handleChange("summary", event.target.value)}
                   placeholder="Short summary of the hero's story"
-                  className="mt-1 w-full rounded-lg border border-slate-700 bg-slate-900 px-4 py-3 text-sm text-slate-50 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500"
+                  className="mt-1 w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm text-slate-50 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500"
                   rows={4}
                 />
               </div>
 
               <div>
-                <label className="text-sm text-slate-300">Impact</label>
+                <label className="text-sm text-slate-700">Impact</label>
                 <textarea
                   value={formState.impact}
                   onChange={(event) => handleChange("impact", event.target.value)}
                   placeholder="Key outcomes or measurable impact"
-                  className="mt-1 w-full rounded-lg border border-slate-700 bg-slate-900 px-4 py-3 text-sm text-slate-50 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500"
+                  className="mt-1 w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm text-slate-50 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500"
                   rows={4}
                 />
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="text-sm text-slate-300">Contact Email</label>
+                  <label className="text-sm text-slate-700">Contact Email</label>
                   <Input
                     type="email"
                     value={formState.contactEmail}
@@ -229,7 +234,7 @@ export default function AmbassadorHeroUploadPage() {
                   />
                 </div>
                 <div>
-                  <label className="text-sm text-slate-300">Contact Phone</label>
+                  <label className="text-sm text-slate-700">Contact Phone</label>
                   <Input
                     value={formState.contactPhone}
                     onChange={(event) => handleChange("contactPhone", event.target.value)}
@@ -239,9 +244,9 @@ export default function AmbassadorHeroUploadPage() {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="rounded-lg border border-dashed border-slate-700 bg-slate-900/40 p-4">
-                  <div className="flex items-center gap-3 text-slate-300 mb-3">
-                    <ImagePlus className="w-5 h-5 text-emerald-400" />
+                <div className="rounded-lg border border-dashed border-slate-200 bg-white/40 p-4">
+                  <div className="flex items-center gap-3 text-slate-700 mb-3">
+                    <ImagePlus className="w-5 h-5 text-sky-600" />
                     <span>Main Hero Image</span>
                   </div>
                   <Input
@@ -250,12 +255,12 @@ export default function AmbassadorHeroUploadPage() {
                     onChange={(event) => setHeroImage(event.target.files?.[0] ?? null)}
                   />
                   {heroImage && (
-                    <p className="mt-2 text-xs text-slate-400">{heroImage.name}</p>
+                    <p className="mt-2 text-xs text-slate-600">{heroImage.name}</p>
                   )}
                 </div>
-                <div className="rounded-lg border border-dashed border-slate-700 bg-slate-900/40 p-4">
-                  <div className="flex items-center gap-3 text-slate-300 mb-3">
-                    <UploadCloud className="w-5 h-5 text-emerald-400" />
+                <div className="rounded-lg border border-dashed border-slate-200 bg-white/40 p-4">
+                  <div className="flex items-center gap-3 text-slate-700 mb-3">
+                    <UploadCloud className="w-5 h-5 text-sky-600" />
                     <span>Additional Images</span>
                   </div>
                   <Input
@@ -267,7 +272,7 @@ export default function AmbassadorHeroUploadPage() {
                     }
                   />
                   {additionalImages.length > 0 && (
-                    <p className="mt-2 text-xs text-slate-400">
+                    <p className="mt-2 text-xs text-slate-600">
                       {additionalImages.length} image(s) selected
                     </p>
                   )}
@@ -286,3 +291,4 @@ export default function AmbassadorHeroUploadPage() {
     </div>
   )
 }
+

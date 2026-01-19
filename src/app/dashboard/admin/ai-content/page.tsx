@@ -98,7 +98,7 @@ export default function AdminAIContentPage() {
   }
 
   return (
-    <div className="flex min-h-screen bg-slate-950">
+    <div className="flex min-h-screen bg-slate-50">
       <Sidebar role="admin" />
 
       <main className="flex-1 p-6 md:p-8 overflow-auto">
@@ -107,15 +107,15 @@ export default function AdminAIContentPage() {
           animate={{ opacity: 1, y: 0 }}
           className="mb-8"
         >
-          <h1 className="text-3xl font-bold text-white mb-2">Ama AI Content</h1>
-          <p className="text-slate-400">Generate platform-ready content variants for hero stories.</p>
+          <h1 className="text-3xl font-bold text-slate-900 mb-2">Ama AI Content</h1>
+          <p className="text-slate-600">Generate platform-ready content variants for hero stories.</p>
         </motion.div>
 
         <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
           <Card className="mb-8">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <Sparkles className="w-5 h-5 text-purple-400" />
+                <Sparkles className="w-5 h-5 text-indigo-600" />
                 Generate New Content
               </CardTitle>
             </CardHeader>
@@ -126,18 +126,18 @@ export default function AdminAIContentPage() {
                 </div>
               )}
               {success && (
-                <div className="mb-4 rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-200">
+                <div className="mb-4 rounded-lg border border-sky-200 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-200">
                   {success}
                 </div>
               )}
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
-                  <label className="text-sm text-slate-300">Hero Profile</label>
+                  <label className="text-sm text-slate-700">Hero Profile</label>
                   <select
                     value={selectedHero}
                     onChange={(event) => setSelectedHero(event.target.value)}
-                    className="mt-1 w-full rounded-lg border border-slate-700 bg-slate-900 px-4 py-2 text-sm text-slate-50"
+                    className="mt-1 w-full rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm text-slate-50"
                     disabled={loading}
                   >
                     {heroes.map((hero) => (
@@ -148,11 +148,11 @@ export default function AdminAIContentPage() {
                   </select>
                 </div>
                 <div>
-                  <label className="text-sm text-slate-300">Platform</label>
+                  <label className="text-sm text-slate-700">Platform</label>
                   <select
                     value={platform}
                     onChange={(event) => setPlatform(event.target.value)}
-                    className="mt-1 w-full rounded-lg border border-slate-700 bg-slate-900 px-4 py-2 text-sm text-slate-50"
+                    className="mt-1 w-full rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm text-slate-50"
                   >
                     {PLATFORM_OPTIONS.map((option) => (
                       <option key={option.value} value={option.value}>
@@ -162,11 +162,11 @@ export default function AdminAIContentPage() {
                   </select>
                 </div>
                 <div>
-                  <label className="text-sm text-slate-300">Content Type</label>
+                  <label className="text-sm text-slate-700">Content Type</label>
                   <select
                     value={contentType}
                     onChange={(event) => setContentType(event.target.value)}
-                    className="mt-1 w-full rounded-lg border border-slate-700 bg-slate-900 px-4 py-2 text-sm text-slate-50"
+                    className="mt-1 w-full rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm text-slate-50"
                   >
                     {CONTENT_OPTIONS.map((option) => (
                       <option key={option.value} value={option.value}>
@@ -192,9 +192,9 @@ export default function AdminAIContentPage() {
               <CardTitle>Generated Content</CardTitle>
             </CardHeader>
             <CardContent>
-              {loading && <div className="text-sm text-slate-400">Loading content...</div>}
+              {loading && <div className="text-sm text-slate-600">Loading content...</div>}
               {!loading && contentItems.length === 0 && (
-                <div className="text-sm text-slate-400">No AI content generated yet.</div>
+                <div className="text-sm text-slate-600">No AI content generated yet.</div>
               )}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 {contentItems.map((item, index) => (
@@ -204,12 +204,12 @@ export default function AdminAIContentPage() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.1 + index * 0.05 }}
                     whileHover={{ y: -4 }}
-                    className="rounded-lg border border-slate-700 bg-slate-900/60 p-4 transition-transform"
+                    className="rounded-lg border border-slate-200 bg-white/60 p-4 transition-transform"
                   >
                     <div className="flex items-center justify-between mb-2">
                       <div>
-                        <div className="text-white font-medium">{item.heroName}</div>
-                        <div className="text-xs text-slate-400">
+                        <div className="text-slate-900 font-medium">{item.heroName}</div>
+                        <div className="text-xs text-slate-600">
                           {item.platform} - {item.contentType}
                         </div>
                       </div>
@@ -217,7 +217,7 @@ export default function AdminAIContentPage() {
                         {item.status}
                       </Badge>
                     </div>
-                    <p className="text-sm text-slate-300 whitespace-pre-line">
+                    <p className="text-sm text-slate-700 whitespace-pre-line">
                       {item.content}
                     </p>
                     {item.hashtags?.length > 0 && (
@@ -235,3 +235,4 @@ export default function AdminAIContentPage() {
     </div>
   )
 }
+

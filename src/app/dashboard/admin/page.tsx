@@ -110,7 +110,7 @@ export default function AdminDashboard() {
   ]
 
   return (
-    <div className="flex min-h-screen bg-slate-950">
+    <div className="flex min-h-screen bg-slate-50">
       <Sidebar role="admin" />
 
       <main className="flex-1 p-6 md:p-8 overflow-auto">
@@ -120,8 +120,8 @@ export default function AdminDashboard() {
           animate={{ opacity: 1, y: 0 }}
           className="mb-8"
         >
-          <h1 className="text-3xl font-bold text-white mb-2">Admin Dashboard</h1>
-          <p className="text-slate-400">Review, approve, and schedule content for publication.</p>
+          <h1 className="text-3xl font-bold text-slate-900 mb-2">Admin Dashboard</h1>
+          <p className="text-slate-600">Review, approve, and schedule content for publication.</p>
         </motion.div>
 
         {/* Stats Grid */}
@@ -144,11 +144,11 @@ export default function AdminDashboard() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="rounded-xl bg-slate-800/50 border border-slate-700 overflow-hidden"
+            className="rounded-xl bg-white/50 border border-slate-200 overflow-hidden"
           >
-            <div className="p-6 border-b border-slate-700 flex items-center justify-between">
+            <div className="p-6 border-b border-slate-200 flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <h2 className="text-lg font-semibold text-white">Review Queue</h2>
+                <h2 className="text-lg font-semibold text-slate-900">Review Queue</h2>
                 <Badge variant="warning">{reviewQueue.length} pending</Badge>
               </div>
               <Link href="/dashboard/admin/review">
@@ -160,19 +160,19 @@ export default function AdminDashboard() {
             </div>
             <div className="divide-y divide-slate-700">
               {loading && (
-                <div className="p-4 text-sm text-slate-400">Loading review queue...</div>
+                <div className="p-4 text-sm text-slate-600">Loading review queue...</div>
               )}
               {!loading && reviewQueue.length === 0 && (
-                <div className="p-4 text-sm text-slate-400">No items awaiting review.</div>
+                <div className="p-4 text-sm text-slate-600">No items awaiting review.</div>
               )}
               {reviewQueue.map((item) => {
                 const submittedAt = item.storySubmittedAt || item.updatedAt
                 const priority = getPriority(submittedAt)
                 const type = item.status === "story_submitted" ? "Full Story" : "Profile Review"
                 return (
-                  <div key={item.id} className="p-4 hover:bg-slate-800/50 transition-colors">
+                  <div key={item.id} className="p-4 hover:bg-white/50 transition-colors">
                     <div className="flex items-center justify-between mb-2">
-                      <h3 className="font-medium text-white">{item.heroName}</h3>
+                      <h3 className="font-medium text-slate-900">{item.heroName}</h3>
                       <Badge
                         variant={
                           priority === "high"
@@ -186,7 +186,7 @@ export default function AdminDashboard() {
                       </Badge>
                     </div>
                     <div className="flex items-center justify-between text-sm">
-                      <span className="text-slate-400">by {item.journalistName || "Unassigned"}</span>
+                      <span className="text-slate-600">by {item.journalistName || "Unassigned"}</span>
                       <span className="text-slate-500">{formatDate(submittedAt)}</span>
                     </div>
                     <div className="mt-2">
@@ -203,12 +203,12 @@ export default function AdminDashboard() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
-            className="rounded-xl bg-slate-800/50 border border-slate-700 overflow-hidden"
+            className="rounded-xl bg-white/50 border border-slate-200 overflow-hidden"
           >
-            <div className="p-6 border-b border-slate-700 flex items-center justify-between">
+            <div className="p-6 border-b border-slate-200 flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <Sparkles className="w-5 h-5 text-purple-400" />
-                <h2 className="text-lg font-semibold text-white">Ama AI Content</h2>
+                <Sparkles className="w-5 h-5 text-indigo-600" />
+                <h2 className="text-lg font-semibold text-slate-900">Ama AI Content</h2>
               </div>
               <Link href="/dashboard/admin/ai-content">
                 <MotionButton variant="ghost" size="sm">
@@ -219,10 +219,10 @@ export default function AdminDashboard() {
             </div>
             <div className="divide-y divide-slate-700">
               {loading && (
-                <div className="p-4 text-sm text-slate-400">Loading AI content...</div>
+                <div className="p-4 text-sm text-slate-600">Loading AI content...</div>
               )}
               {!loading && aiContent.length === 0 && (
-                <div className="p-4 text-sm text-slate-400">No AI content yet.</div>
+                <div className="p-4 text-sm text-slate-600">No AI content yet.</div>
               )}
               {aiContent.map((item) => {
                 const statusVariant =
@@ -232,14 +232,14 @@ export default function AdminDashboard() {
                     ? "danger"
                     : "review"
                 return (
-                  <div key={item.id} className="p-4 hover:bg-slate-800/50 transition-colors">
+                  <div key={item.id} className="p-4 hover:bg-white/50 transition-colors">
                     <div className="flex items-center justify-between mb-2">
-                      <h3 className="font-medium text-white">{item.heroName}</h3>
+                      <h3 className="font-medium text-slate-900">{item.heroName}</h3>
                       <Badge variant={statusVariant}>{item.status}</Badge>
                     </div>
                     <div className="flex items-center gap-4 text-sm">
-                      <span className="text-purple-400">{item.platform}</span>
-                      <span className="text-slate-400">{item.contentType}</span>
+                      <span className="text-indigo-600">{item.platform}</span>
+                      <span className="text-slate-600">{item.contentType}</span>
                     </div>
                   </div>
                 )
@@ -253,12 +253,12 @@ export default function AdminDashboard() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
-          className="rounded-xl bg-slate-800/50 border border-slate-700 overflow-hidden mb-8"
+          className="rounded-xl bg-white/50 border border-slate-200 overflow-hidden mb-8"
         >
-          <div className="p-6 border-b border-slate-700 flex items-center justify-between">
+          <div className="p-6 border-b border-slate-200 flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <Calendar className="w-5 h-5 text-blue-400" />
-              <h2 className="text-lg font-semibold text-white">Upcoming Publications</h2>
+              <Calendar className="w-5 h-5 text-sky-600" />
+              <h2 className="text-lg font-semibold text-slate-900">Upcoming Publications</h2>
             </div>
             <Link href="/dashboard/admin/schedule">
               <MotionButton variant="ghost" size="sm">
@@ -270,10 +270,10 @@ export default function AdminDashboard() {
           <div className="p-4">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {loading && (
-                <div className="text-sm text-slate-400">Loading schedule...</div>
+                <div className="text-sm text-slate-600">Loading schedule...</div>
               )}
               {!loading && upcomingPublish.length === 0 && (
-                <div className="text-sm text-slate-400">No scheduled publications yet.</div>
+                <div className="text-sm text-slate-600">No scheduled publications yet.</div>
               )}
               {upcomingPublish.map((item, index) => {
                 const scheduledDate = item.scheduledFor || item.updatedAt
@@ -283,14 +283,14 @@ export default function AdminDashboard() {
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.6 + index * 0.1 }}
-                    className="p-4 rounded-lg bg-slate-900/50 border border-slate-700"
+                    className="p-4 rounded-lg bg-white/50 border border-slate-200"
                   >
                     <div className="flex items-center justify-between mb-2">
-                      <h3 className="font-medium text-white">{item.heroName}</h3>
+                      <h3 className="font-medium text-slate-900">{item.heroName}</h3>
                       <Badge variant="approved">scheduled</Badge>
                     </div>
-                    <p className="text-sm text-slate-400 mb-1">{item.category}</p>
-                    <p className="text-sm text-blue-400">{formatDate(scheduledDate)}</p>
+                    <p className="text-sm text-slate-600 mb-1">{item.category}</p>
+                    <p className="text-sm text-sky-600">{formatDate(scheduledDate)}</p>
                   </motion.div>
                 )
               })}
@@ -308,43 +308,44 @@ export default function AdminDashboard() {
           <div className="p-6 rounded-xl bg-gradient-to-br from-emerald-500/10 to-emerald-600/10 border border-emerald-500/20">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 rounded-lg bg-emerald-500/20 flex items-center justify-center">
-                <Users className="w-5 h-5 text-emerald-400" />
+                <Users className="w-5 h-5 text-sky-600" />
               </div>
               <div>
-                <div className="text-2xl font-bold text-white">{dashboardStats?.totalUsers ?? 0}</div>
-                <div className="text-sm text-slate-400">Total Users</div>
+                <div className="text-2xl font-bold text-slate-900">{dashboardStats?.totalUsers ?? 0}</div>
+                <div className="text-sm text-slate-600">Total Users</div>
               </div>
             </div>
-            <div className="text-emerald-400 text-sm">All active roles</div>
+            <div className="text-sky-600 text-sm">All active roles</div>
           </div>
 
           <div className="p-6 rounded-xl bg-gradient-to-br from-blue-500/10 to-blue-600/10 border border-blue-500/20">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center">
-                <Users className="w-5 h-5 text-blue-400" />
+                <Users className="w-5 h-5 text-sky-600" />
               </div>
               <div>
-                <div className="text-2xl font-bold text-white">{dashboardStats?.ambassadors ?? 0}</div>
-                <div className="text-sm text-slate-400">Ambassadors</div>
+                <div className="text-2xl font-bold text-slate-900">{dashboardStats?.ambassadors ?? 0}</div>
+                <div className="text-sm text-slate-600">Ambassadors</div>
               </div>
             </div>
-            <div className="text-blue-400 text-sm">Field submissions</div>
+            <div className="text-sky-600 text-sm">Field submissions</div>
           </div>
 
           <div className="p-6 rounded-xl bg-gradient-to-br from-purple-500/10 to-purple-600/10 border border-purple-500/20">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 rounded-lg bg-purple-500/20 flex items-center justify-center">
-                <Users className="w-5 h-5 text-purple-400" />
+                <Users className="w-5 h-5 text-indigo-600" />
               </div>
               <div>
-                <div className="text-2xl font-bold text-white">{dashboardStats?.journalists ?? 0}</div>
-                <div className="text-sm text-slate-400">Journalists</div>
+                <div className="text-2xl font-bold text-slate-900">{dashboardStats?.journalists ?? 0}</div>
+                <div className="text-sm text-slate-600">Journalists</div>
               </div>
             </div>
-            <div className="text-purple-400 text-sm">Active storytellers</div>
+            <div className="text-indigo-600 text-sm">Active storytellers</div>
           </div>
         </motion.div>
       </main>
     </div>
   )
 }
+

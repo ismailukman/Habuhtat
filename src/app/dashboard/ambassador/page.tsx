@@ -91,7 +91,7 @@ export default function AmbassadorDashboard() {
   ]
 
   return (
-    <div className="flex min-h-screen bg-slate-950">
+    <div className="flex min-h-screen bg-slate-50">
       <Sidebar role="ambassador" />
 
       <main className="flex-1 p-6 md:p-8 overflow-auto">
@@ -101,10 +101,12 @@ export default function AmbassadorDashboard() {
           animate={{ opacity: 1, y: 0 }}
           className="mb-8"
         >
-          <h1 className="text-3xl font-bold text-white mb-2">
+          <h1 className="text-3xl font-bold text-slate-900 mb-2">
             Welcome back{profile?.name ? `, ${profile.name}` : ", Ambassador"}!
           </h1>
-          <p className="text-slate-400">Discover and share the stories of local environmental heroes.</p>
+          <p className="text-slate-600">
+            Discover and share the stories of local heroes across health, culture, environment, and entrepreneurship.
+          </p>
         </motion.div>
 
         {/* Quick Action */}
@@ -115,18 +117,18 @@ export default function AmbassadorDashboard() {
           className="mb-8"
         >
           <Link href="/dashboard/ambassador/upload">
-            <div className="p-6 rounded-xl bg-gradient-to-r from-emerald-500/20 to-emerald-600/20 border border-emerald-500/30 hover:border-emerald-500/50 transition-all cursor-pointer group">
+            <div className="p-6 rounded-xl bg-gradient-to-r from-sky-100 to-emerald-100 border border-sky-200 hover:border-emerald-500/50 transition-all cursor-pointer group">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
-                  <div className="w-14 h-14 rounded-xl bg-emerald-500 flex items-center justify-center shadow-lg shadow-emerald-500/30">
-                    <Plus className="w-7 h-7 text-white" />
+                  <div className="w-14 h-14 rounded-xl bg-emerald-500 flex items-center justify-center shadow-lg shadow-sky-200/60">
+                    <Plus className="w-7 h-7 text-slate-900" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold text-white">Upload New Hero Profile</h3>
-                    <p className="text-emerald-400/80">Share the story of an environmental hero you've discovered</p>
+                    <h3 className="text-xl font-semibold text-slate-900">Upload New Hero Profile</h3>
+                    <p className="text-sky-600/80">Share the story of a local hero you've discovered</p>
                   </div>
                 </div>
-                <ArrowRight className="w-6 h-6 text-emerald-400 group-hover:translate-x-2 transition-transform" />
+                <ArrowRight className="w-6 h-6 text-sky-600 group-hover:translate-x-2 transition-transform" />
               </div>
             </div>
           </Link>
@@ -159,7 +161,7 @@ export default function AmbassadorDashboard() {
           transition={{ delay: 0.3 }}
         >
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-semibold text-white">Recent Submissions</h2>
+            <h2 className="text-xl font-semibold text-slate-900">Recent Submissions</h2>
             <Link href="/dashboard/ambassador/submissions">
               <MotionButton variant="ghost" size="sm">
                 View All
@@ -170,10 +172,10 @@ export default function AmbassadorDashboard() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {loading && (
-              <div className="text-slate-400 text-sm">Loading recent submissions...</div>
+              <div className="text-slate-600 text-sm">Loading recent submissions...</div>
             )}
             {!loading && recentSubmissions.length === 0 && (
-              <div className="text-slate-400 text-sm">
+              <div className="text-slate-600 text-sm">
                 No submissions yet. Upload your first hero profile to get started.
               </div>
             )}
@@ -207,18 +209,18 @@ export default function AmbassadorDashboard() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6 }}
-          className="mt-8 p-6 rounded-xl bg-slate-800/50 border border-slate-700"
+          className="mt-8 p-6 rounded-xl bg-white/50 border border-slate-200"
         >
-          <h3 className="text-lg font-semibold text-white mb-4">Tips for Great Profiles</h3>
+          <h3 className="text-lg font-semibold text-slate-900 mb-4">Tips for Great Profiles</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {[
               { title: "Clear Photos", desc: "High-quality images of the hero and their work make a big impact." },
               { title: "Detailed Story", desc: "Include background, challenges faced, and achievements." },
               { title: "Contact Info", desc: "Ensure the hero can be reached for journalist interviews." },
             ].map((tip, i) => (
-              <div key={i} className="p-4 rounded-lg bg-slate-900/50">
-                <h4 className="font-medium text-emerald-400 mb-2">{tip.title}</h4>
-                <p className="text-sm text-slate-400">{tip.desc}</p>
+              <div key={i} className="p-4 rounded-lg bg-white/50">
+                <h4 className="font-medium text-sky-600 mb-2">{tip.title}</h4>
+                <p className="text-sm text-slate-600">{tip.desc}</p>
               </div>
             ))}
           </div>
@@ -227,3 +229,4 @@ export default function AmbassadorDashboard() {
     </div>
   )
 }
+

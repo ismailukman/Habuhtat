@@ -62,13 +62,13 @@ export function Sidebar({ role }: SidebarProps) {
   const sidebarContent = (
     <>
       {/* Logo */}
-      <div className="p-4 border-b border-slate-800">
+      <div className="p-4 border-b border-slate-200">
         <Link href="/" className="flex items-center gap-3">
           <div className={cn(
-            "w-10 h-10 rounded-full bg-gradient-to-r flex items-center justify-center shadow-lg",
-            color === "emerald" && "from-emerald-500 to-emerald-600 shadow-emerald-500/30",
-            color === "blue" && "from-blue-500 to-blue-600 shadow-blue-500/30",
-            color === "purple" && "from-purple-500 to-purple-600 shadow-purple-500/30"
+            "w-10 h-10 rounded-full bg-gradient-to-r flex items-center justify-center shadow-md",
+            color === "emerald" && "from-emerald-500 to-emerald-600 shadow-emerald-200/60",
+            color === "blue" && "from-sky-500 to-sky-600 shadow-sky-200/60",
+            color === "purple" && "from-indigo-500 to-indigo-600 shadow-indigo-200/60"
           )}>
             <span className="text-xl font-bold text-white">H</span>
           </div>
@@ -80,12 +80,12 @@ export function Sidebar({ role }: SidebarProps) {
                 exit={{ opacity: 0, width: 0 }}
                 className="overflow-hidden"
               >
-                <span className="text-lg font-bold text-white whitespace-nowrap">Habuhtat</span>
+                <span className="text-lg font-bold text-slate-900 whitespace-nowrap">Habuhtat</span>
                 <div className={cn(
                   "text-xs font-medium",
-                  color === "emerald" && "text-emerald-400",
-                  color === "blue" && "text-blue-400",
-                  color === "purple" && "text-purple-400"
+                  color === "emerald" && "text-emerald-600",
+                  color === "blue" && "text-sky-600",
+                  color === "purple" && "text-indigo-600"
                 )}>
                   {roleLabels[role]}
                 </div>
@@ -109,12 +109,12 @@ export function Sidebar({ role }: SidebarProps) {
                   "flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all cursor-pointer",
                   isActive
                     ? cn(
-                        "text-white",
-                        color === "emerald" && "bg-emerald-500/20 text-emerald-400",
-                        color === "blue" && "bg-blue-500/20 text-blue-400",
-                        color === "purple" && "bg-purple-500/20 text-purple-400"
+                        "text-slate-900",
+                        color === "emerald" && "bg-emerald-100 text-emerald-700",
+                        color === "blue" && "bg-sky-100 text-sky-700",
+                        color === "purple" && "bg-indigo-100 text-indigo-700"
                       )
-                    : "text-slate-400 hover:text-white hover:bg-slate-800"
+                    : "text-slate-500 hover:text-slate-900 hover:bg-slate-100"
                 )}
               >
                 <Icon className="w-5 h-5 shrink-0" />
@@ -137,10 +137,10 @@ export function Sidebar({ role }: SidebarProps) {
       </nav>
 
       {/* Bottom Section */}
-      <div className="p-4 border-t border-slate-800 space-y-2">
+      <div className="p-4 border-t border-slate-200 space-y-2">
         <button
           onClick={() => setIsCollapsed(!isCollapsed)}
-          className="hidden md:flex w-full items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-all"
+          className="hidden md:flex w-full items-center gap-3 px-3 py-2.5 rounded-lg text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-all"
         >
           <ChevronLeft className={cn("w-5 h-5 shrink-0 transition-transform", isCollapsed && "rotate-180")} />
           <AnimatePresence>
@@ -158,7 +158,7 @@ export function Sidebar({ role }: SidebarProps) {
         </button>
 
         <Link href="/login">
-          <div className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-red-400 hover:bg-red-500/10 transition-all cursor-pointer">
+          <div className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-500 hover:text-red-600 hover:bg-red-50 transition-all cursor-pointer">
             <LogOut className="w-5 h-5 shrink-0" />
             <AnimatePresence>
               {!isCollapsed && (
@@ -183,7 +183,7 @@ export function Sidebar({ role }: SidebarProps) {
       {/* Mobile Menu Button */}
       <button
         onClick={() => setIsMobileOpen(!isMobileOpen)}
-        className="md:hidden fixed top-4 left-4 z-50 p-2 rounded-lg bg-slate-800 text-white"
+        className="md:hidden fixed top-4 left-4 z-50 p-2 rounded-lg bg-white text-slate-900 shadow-md border border-slate-200"
       >
         <Menu className="w-6 h-6" />
       </button>
@@ -196,7 +196,7 @@ export function Sidebar({ role }: SidebarProps) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setIsMobileOpen(false)}
-            className="md:hidden fixed inset-0 bg-black/50 z-40"
+            className="md:hidden fixed inset-0 bg-slate-900/30 z-40"
           />
         )}
       </AnimatePresence>
@@ -209,7 +209,7 @@ export function Sidebar({ role }: SidebarProps) {
           x: isMobileOpen ? 0 : -256,
         }}
         className={cn(
-          "fixed md:relative md:translate-x-0 z-50 h-screen bg-slate-900 border-r border-slate-800 flex flex-col transition-all",
+          "fixed md:relative md:translate-x-0 z-50 h-screen bg-white border-r border-slate-200 flex flex-col transition-all",
           "md:animate-none"
         )}
         style={{ width: isCollapsed ? 80 : 256 }}

@@ -129,7 +129,7 @@ export default function JournalistDashboard() {
   })
 
   return (
-    <div className="flex min-h-screen bg-slate-950">
+    <div className="flex min-h-screen bg-slate-50">
       <Sidebar role="journalist" />
 
       <main className="flex-1 p-6 md:p-8 overflow-auto">
@@ -139,8 +139,8 @@ export default function JournalistDashboard() {
           animate={{ opacity: 1, y: 0 }}
           className="mb-8"
         >
-          <h1 className="text-3xl font-bold text-white mb-2">Welcome back, Journalist!</h1>
-          <p className="text-slate-400">Discover stories waiting to be told.</p>
+          <h1 className="text-3xl font-bold text-slate-900 mb-2">Welcome back, Journalist!</h1>
+          <p className="text-slate-600">Discover stories waiting to be told.</p>
         </motion.div>
 
         {/* Search Bar */}
@@ -190,8 +190,8 @@ export default function JournalistDashboard() {
           >
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-3">
-                <h2 className="text-xl font-semibold text-white">My Active Claims</h2>
-                <span className="px-2 py-1 rounded-full bg-blue-500/20 text-blue-400 text-sm font-medium">
+                <h2 className="text-xl font-semibold text-slate-900">My Active Claims</h2>
+                <span className="px-2 py-1 rounded-full bg-blue-500/20 text-sky-600 text-sm font-medium">
                   {myClaims.length} in progress
                 </span>
               </div>
@@ -205,10 +205,10 @@ export default function JournalistDashboard() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {loading && (
-                <div className="text-slate-400 text-sm">Loading your claims...</div>
+                <div className="text-slate-600 text-sm">Loading your claims...</div>
               )}
               {!loading && myClaims.length === 0 && (
-                <div className="text-slate-400 text-sm">You have no active claims yet.</div>
+                <div className="text-slate-600 text-sm">You have no active claims yet.</div>
               )}
               {myClaims.map((claim, index) => (
                 <motion.div
@@ -244,8 +244,8 @@ export default function JournalistDashboard() {
         >
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-3">
-              <h2 className="text-xl font-semibold text-white">Available Profiles</h2>
-              <div className="flex items-center gap-1 text-emerald-400 text-sm">
+              <h2 className="text-xl font-semibold text-slate-900">Available Profiles</h2>
+              <div className="flex items-center gap-1 text-sky-600 text-sm">
                 <TrendingUp className="w-4 h-4" />
                 <span>5 new this week</span>
               </div>
@@ -260,10 +260,10 @@ export default function JournalistDashboard() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {loading && (
-              <div className="text-slate-400 text-sm">Loading available profiles...</div>
+              <div className="text-slate-600 text-sm">Loading available profiles...</div>
             )}
             {!loading && filteredProfiles.length === 0 && (
-              <div className="text-slate-400 text-sm">No profiles match your search.</div>
+              <div className="text-slate-600 text-sm">No profiles match your search.</div>
             )}
             {filteredProfiles.map((profile, index) => (
               <motion.div
@@ -298,7 +298,7 @@ export default function JournalistDashboard() {
           transition={{ delay: 0.8 }}
           className="mt-8 p-6 rounded-xl bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20"
         >
-          <h3 className="text-lg font-semibold text-white mb-4">Story Guidelines</h3>
+          <h3 className="text-lg font-semibold text-slate-900 mb-4">Story Guidelines</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
               { title: "Interview First", desc: "Connect with the hero before writing" },
@@ -307,11 +307,11 @@ export default function JournalistDashboard() {
               { title: "Visuals Matter", desc: "Request or capture quality photos" },
             ].map((tip, i) => (
               <div key={i} className="text-center">
-                <div className="w-10 h-10 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center mx-auto mb-2 font-bold">
+                <div className="w-10 h-10 rounded-full bg-blue-500/20 text-sky-600 flex items-center justify-center mx-auto mb-2 font-bold">
                   {i + 1}
                 </div>
-                <h4 className="font-medium text-white mb-1">{tip.title}</h4>
-                <p className="text-sm text-slate-400">{tip.desc}</p>
+                <h4 className="font-medium text-slate-900 mb-1">{tip.title}</h4>
+                <p className="text-sm text-slate-600">{tip.desc}</p>
               </div>
             ))}
           </div>
@@ -320,3 +320,4 @@ export default function JournalistDashboard() {
     </div>
   )
 }
+

@@ -18,7 +18,7 @@ export function FeatureCard({ icon: Icon, title, description, gradient }: Featur
       viewport={{ once: true }}
       whileHover={{ y: -5, scale: 1.02 }}
       transition={{ duration: 0.3 }}
-      className="group relative p-6 rounded-2xl bg-slate-800/50 border border-slate-700 hover:border-slate-600 transition-all duration-300 hover:shadow-xl overflow-hidden"
+      className="group relative p-6 rounded-2xl bg-white border border-slate-200 hover:border-sky-200 transition-all duration-300 hover:shadow-xl overflow-hidden"
     >
       {/* Gradient Background on Hover */}
       <div className={`absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-300 ${gradient}`} />
@@ -29,10 +29,10 @@ export function FeatureCard({ icon: Icon, title, description, gradient }: Featur
       </div>
 
       {/* Content */}
-      <h3 className="relative text-xl font-semibold mb-2 text-white group-hover:text-emerald-400 transition-colors">
+      <h3 className="relative text-xl font-semibold mb-2 text-slate-900 group-hover:text-sky-600 transition-colors">
         {title}
       </h3>
-      <p className="relative text-slate-400 leading-relaxed">
+      <p className="relative text-slate-600 leading-relaxed">
         {description}
       </p>
     </motion.div>

@@ -143,7 +143,7 @@ export default function SetupPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-950 flex items-center justify-center p-8">
+    <div className="min-h-screen bg-slate-50 flex items-center justify-center p-8">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -151,29 +151,29 @@ export default function SetupPage() {
       >
         <div className="text-center mb-8">
           <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-500 to-emerald-600 flex items-center justify-center mx-auto mb-4 shadow-lg shadow-emerald-500/30">
-            <Shield className="w-8 h-8 text-white" />
+            <Shield className="w-8 h-8 text-slate-900" />
           </div>
-          <h1 className="text-3xl font-bold text-white mb-2">Setup Demo Data</h1>
-          <p className="text-slate-400">
+          <h1 className="text-3xl font-bold text-slate-900 mb-2">Setup Demo Data</h1>
+          <p className="text-slate-600">
             Create demo users and sample data for testing the platform.
           </p>
         </div>
 
-        <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-6 mb-6">
-          <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-            <Users className="w-5 h-5 text-emerald-400" />
+        <div className="bg-white border border-slate-200 rounded-xl p-6 mb-6 shadow-sm">
+          <h2 className="text-lg font-semibold text-slate-900 mb-4 flex items-center gap-2">
+            <Users className="w-5 h-5 text-sky-600" />
             Demo Accounts to Create
           </h2>
           <div className="space-y-3">
             {DEMO_USERS.map((user) => (
-              <div key={user.email} className="flex items-center justify-between p-3 bg-slate-900/50 rounded-lg">
+              <div key={user.email} className="flex items-center justify-between p-3 bg-white/50 rounded-lg">
                 <div>
-                  <div className="font-medium text-white">{user.name}</div>
-                  <div className="text-sm text-slate-400">{user.email}</div>
+                  <div className="font-medium text-slate-900">{user.name}</div>
+                  <div className="text-sm text-slate-600">{user.email}</div>
                 </div>
                 <span className={`px-3 py-1 rounded-full text-xs font-medium ${
                   user.role === "admin" ? "bg-purple-500/20 text-purple-400" :
-                  user.role === "ambassador" ? "bg-emerald-500/20 text-emerald-400" :
+                  user.role === "ambassador" ? "bg-emerald-500/20 text-sky-600" :
                   "bg-blue-500/20 text-blue-400"
                 }`}>
                   {user.role}
@@ -195,21 +195,21 @@ export default function SetupPage() {
 
         {status === "loading" && (
           <div className="text-center">
-            <Loader2 className="w-8 h-8 text-emerald-400 animate-spin mx-auto mb-4" />
-            <p className="text-slate-300">{currentStep}</p>
+            <Loader2 className="w-8 h-8 text-sky-600 animate-spin mx-auto mb-4" />
+            <p className="text-slate-700">{currentStep}</p>
           </div>
         )}
 
         {logs.length > 0 && (
-          <div className="mt-6 bg-slate-900 border border-slate-700 rounded-xl p-4 max-h-64 overflow-auto">
-            <h3 className="text-sm font-medium text-slate-400 mb-3">Setup Log</h3>
+          <div className="mt-6 bg-white border border-slate-200 rounded-xl p-4 max-h-64 overflow-auto">
+            <h3 className="text-sm font-medium text-slate-600 mb-3">Setup Log</h3>
             <div className="space-y-1 font-mono text-sm">
               {logs.map((log, i) => (
                 <div key={i} className={`${
-                  log.startsWith("✓") ? "text-emerald-400" :
+                  log.startsWith("✓") ? "text-sky-600" :
                   log.startsWith("✗") ? "text-red-400" :
                   log.startsWith("⚠") ? "text-amber-400" :
-                  "text-slate-300"
+                  "text-slate-700"
                 }`}>
                   {log}
                 </div>
@@ -222,12 +222,12 @@ export default function SetupPage() {
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="mt-6 p-4 bg-emerald-500/10 border border-emerald-500/30 rounded-xl flex items-center gap-3"
+            className="mt-6 p-4 bg-sky-100 border border-sky-200 rounded-xl flex items-center gap-3"
           >
-            <CheckCircle className="w-6 h-6 text-emerald-400 shrink-0" />
+            <CheckCircle className="w-6 h-6 text-sky-600 shrink-0" />
             <div>
-              <p className="text-emerald-400 font-medium">Setup Complete!</p>
-              <p className="text-emerald-400/70 text-sm">
+              <p className="text-sky-600 font-medium">Setup Complete!</p>
+              <p className="text-sky-600/70 text-sm">
                 You can now <a href="/login" className="underline">login</a> with the demo accounts.
               </p>
             </div>
@@ -249,7 +249,7 @@ export default function SetupPage() {
         )}
 
         <div className="mt-8 text-center">
-          <a href="/login" className="text-emerald-400 hover:text-emerald-300 text-sm">
+          <a href="/login" className="text-sky-600 hover:text-emerald-300 text-sm">
             Go to Login Page →
           </a>
         </div>
@@ -257,3 +257,4 @@ export default function SetupPage() {
     </div>
   )
 }
+

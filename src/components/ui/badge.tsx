@@ -8,36 +8,36 @@ const badgeVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-slate-700 text-slate-300",
+          "bg-slate-100 text-slate-600",
         primary:
-          "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30",
+          "bg-sky-100 text-sky-700 border border-sky-200",
         secondary:
-          "bg-blue-500/20 text-blue-400 border border-blue-500/30",
+          "bg-emerald-50 text-emerald-700 border border-emerald-200",
         success:
-          "bg-green-500/20 text-green-400 border border-green-500/30",
+          "bg-green-100 text-green-700 border border-green-200",
         warning:
-          "bg-amber-500/20 text-amber-400 border border-amber-500/30",
+          "bg-amber-100 text-amber-700 border border-amber-200",
         danger:
-          "bg-red-500/20 text-red-400 border border-red-500/30",
+          "bg-red-100 text-red-700 border border-red-200",
         purple:
-          "bg-purple-500/20 text-purple-400 border border-purple-500/30",
+          "bg-indigo-100 text-indigo-700 border border-indigo-200",
         // Status badges
         review:
-          "bg-gradient-to-r from-amber-500/20 to-orange-500/20 text-amber-400 border border-amber-500/30",
+          "bg-amber-100 text-amber-700 border border-amber-200",
         claimed:
-          "bg-gradient-to-r from-blue-500/20 to-cyan-500/20 text-blue-400 border border-blue-500/30",
+          "bg-sky-100 text-sky-700 border border-sky-200",
         approved:
-          "bg-gradient-to-r from-emerald-500/20 to-green-500/20 text-emerald-400 border border-emerald-500/30",
+          "bg-emerald-100 text-emerald-700 border border-emerald-200",
         scheduled:
-          "bg-gradient-to-r from-purple-500/20 to-pink-500/20 text-purple-400 border border-purple-500/30",
+          "bg-indigo-100 text-indigo-700 border border-indigo-200",
         published:
-          "bg-gradient-to-r from-emerald-500/20 to-teal-500/20 text-emerald-400 border border-emerald-500/30 shadow-lg shadow-emerald-500/10",
+          "bg-emerald-100 text-emerald-700 border border-emerald-200 shadow-sm",
         draft:
-          "bg-slate-700/50 text-slate-300 border border-slate-600/60",
+          "bg-slate-100 text-slate-600 border border-slate-200",
         story_submitted:
-          "bg-gradient-to-r from-amber-500/20 to-orange-500/20 text-amber-400 border border-amber-500/30",
+          "bg-amber-100 text-amber-700 border border-amber-200",
         ai_generated:
-          "bg-gradient-to-r from-purple-500/20 to-indigo-500/20 text-purple-400 border border-purple-500/30",
+          "bg-indigo-100 text-indigo-700 border border-indigo-200",
       },
     },
     defaultVariants: {

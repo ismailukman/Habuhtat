@@ -11,7 +11,7 @@ const Card = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "rounded-xl border border-slate-700 bg-slate-800/50 text-slate-50 shadow-lg backdrop-blur-sm",
+      "rounded-xl border border-slate-200 bg-white/90 text-slate-900 shadow-md backdrop-blur-sm",
       className
     )}
     {...props}
@@ -31,7 +31,7 @@ const MotionCard = React.forwardRef<HTMLDivElement, MotionCardProps>(
       whileHover={{ y: -4, scale: 1.01 }}
       transition={{ duration: 0.2 }}
       className={cn(
-        "rounded-xl border border-slate-700 bg-slate-800/50 text-slate-50 shadow-lg backdrop-blur-sm transition-all hover:border-slate-600 hover:shadow-xl hover:shadow-emerald-500/5",
+        "rounded-xl border border-slate-200 bg-white/90 text-slate-900 shadow-md backdrop-blur-sm transition-all hover:border-sky-200 hover:shadow-xl hover:shadow-sky-200/40",
         className
       )}
     >

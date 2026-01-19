@@ -11,7 +11,7 @@ const roles = [
   {
     id: "ambassador",
     title: "Ambassador",
-    description: "Discover and upload profiles of local environmental heroes.",
+    description: "Discover and upload profiles of local heroes across health, culture, and impact.",
     icon: Globe,
     color: "emerald",
   },
@@ -47,7 +47,7 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-950 flex">
+    <div className="min-h-screen bg-slate-50 flex">
       {/* Left Panel - Form */}
       <div className="flex-1 flex items-center justify-center p-8">
         <motion.div
@@ -58,37 +58,37 @@ export default function SignupPage() {
         >
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 mb-12">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-r from-emerald-500 to-emerald-600 flex items-center justify-center shadow-lg shadow-emerald-500/30">
+            <div className="w-10 h-10 rounded-full bg-gradient-to-r from-sky-500 to-sky-600 flex items-center justify-center shadow-lg shadow-sky-200/70">
               <span className="text-xl font-bold text-white">H</span>
             </div>
-            <span className="text-xl font-bold text-white">Habuhtat Media</span>
+            <span className="text-xl font-bold text-slate-900">Habuhtat Media</span>
           </Link>
 
           {!isSent ? (
             <>
               {/* Progress Steps */}
               <div className="flex items-center gap-4 mb-8">
-                <div className={`flex items-center gap-2 ${step >= 1 ? 'text-emerald-400' : 'text-slate-500'}`}>
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${step >= 1 ? 'bg-emerald-500 text-white' : 'bg-slate-800 text-slate-500'}`}>
+                <div className={`flex items-center gap-2 ${step >= 1 ? 'text-sky-600' : 'text-slate-500'}`}>
+                  <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${step >= 1 ? 'bg-sky-500 text-white' : 'bg-white text-slate-500'}`}>
                     1
                   </div>
                   <span className="text-sm font-medium">Details</span>
                 </div>
-                <div className={`flex-1 h-0.5 ${step >= 2 ? 'bg-emerald-500' : 'bg-slate-800'}`} />
-                <div className={`flex items-center gap-2 ${step >= 2 ? 'text-emerald-400' : 'text-slate-500'}`}>
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${step >= 2 ? 'bg-emerald-500 text-white' : 'bg-slate-800 text-slate-500'}`}>
+                <div className={`flex-1 h-0.5 ${step >= 2 ? 'bg-sky-500' : 'bg-white'}`} />
+                <div className={`flex items-center gap-2 ${step >= 2 ? 'text-sky-600' : 'text-slate-500'}`}>
+                  <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${step >= 2 ? 'bg-sky-500 text-white' : 'bg-white text-slate-500'}`}>
                     2
                   </div>
                   <span className="text-sm font-medium">Role</span>
                 </div>
               </div>
 
-              <h1 className="text-3xl font-bold text-white mb-2">
+              <h1 className="text-3xl font-bold text-slate-900 mb-2">
                 {step === 1 ? "Create your account" : "Choose your role"}
               </h1>
-              <p className="text-slate-400 mb-8">
+              <p className="text-slate-600 mb-8">
                 {step === 1
-                  ? "Join the movement to amplify environmental heroes."
+                  ? "Join the movement to amplify local heroes."
                   : "How would you like to contribute?"}
               </p>
 
@@ -96,7 +96,7 @@ export default function SignupPage() {
                 {step === 1 ? (
                   <>
                     <div>
-                      <label htmlFor="name" className="block text-sm font-medium text-slate-300 mb-2">
+                      <label htmlFor="name" className="block text-sm font-medium text-slate-700 mb-2">
                         Full name
                       </label>
                       <div className="relative">
@@ -114,7 +114,7 @@ export default function SignupPage() {
                     </div>
 
                     <div>
-                      <label htmlFor="email" className="block text-sm font-medium text-slate-300 mb-2">
+                      <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-2">
                         Email address
                       </label>
                       <div className="relative">
@@ -146,22 +146,22 @@ export default function SignupPage() {
                           className={`w-full p-4 rounded-xl border-2 text-left transition-all ${
                             isSelected
                               ? role.color === "emerald"
-                                ? "border-emerald-500 bg-emerald-500/10"
-                                : "border-blue-500 bg-blue-500/10"
-                              : "border-slate-700 bg-slate-800/50 hover:border-slate-600"
+                              ? "border-sky-500 bg-sky-100"
+                                : "border-emerald-500 bg-emerald-100"
+                              : "border-slate-200 bg-white/50 hover:border-slate-600"
                           }`}
                         >
                           <div className="flex items-start gap-4">
                             <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
                               role.color === "emerald"
-                                ? "bg-emerald-500/20 text-emerald-400"
-                                : "bg-blue-500/20 text-blue-400"
+                                ? "bg-sky-100 text-sky-600"
+                                : "bg-emerald-100 text-emerald-600"
                             }`}>
                               <Icon className="w-6 h-6" />
                             </div>
                             <div>
-                              <h3 className="font-semibold text-white">{role.title}</h3>
-                              <p className="text-sm text-slate-400 mt-1">{role.description}</p>
+                              <h3 className="font-semibold text-slate-900">{role.title}</h3>
+                              <p className="text-sm text-slate-600 mt-1">{role.description}</p>
                             </div>
                           </div>
                         </motion.button>
@@ -204,9 +204,9 @@ export default function SignupPage() {
               </form>
 
               <div className="mt-8 text-center">
-                <p className="text-slate-400">
+                <p className="text-slate-600">
                   Already have an account?{" "}
-                  <Link href="/login" className="text-emerald-400 hover:text-emerald-300 font-medium">
+                  <Link href="/login" className="text-sky-600 hover:text-sky-500 font-medium">
                     Sign in
                   </Link>
                 </p>
@@ -218,12 +218,12 @@ export default function SignupPage() {
               animate={{ opacity: 1, scale: 1 }}
               className="text-center"
             >
-              <div className="w-16 h-16 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center mx-auto mb-6">
-                <Mail className="w-8 h-8 text-emerald-400" />
+              <div className="w-16 h-16 rounded-full bg-sky-100 border border-sky-200 flex items-center justify-center mx-auto mb-6">
+                <Mail className="w-8 h-8 text-sky-600" />
               </div>
-              <h2 className="text-2xl font-bold text-white mb-2">Check your email</h2>
-              <p className="text-slate-400 mb-8">
-                We sent a verification link to <span className="text-white font-medium">{email}</span>
+              <h2 className="text-2xl font-bold text-slate-900 mb-2">Check your email</h2>
+              <p className="text-slate-600 mb-8">
+                We sent a verification link to <span className="text-slate-900 font-medium">{email}</span>
               </p>
               <Button
                 variant="outline"
@@ -240,10 +240,10 @@ export default function SignupPage() {
       </div>
 
       {/* Right Panel - Visual */}
-      <div className="hidden lg:flex flex-1 bg-gradient-to-br from-slate-900 to-slate-800 items-center justify-center p-12 relative overflow-hidden">
+      <div className="hidden lg:flex flex-1 bg-gradient-to-br from-slate-50 to-white items-center justify-center p-12 relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute inset-0" style={{
-            backgroundImage: `radial-gradient(circle at 2px 2px, rgba(16, 185, 129, 0.3) 1px, transparent 0)`,
+            backgroundImage: `radial-gradient(circle at 2px 2px, rgba(14, 165, 233, 0.2) 1px, transparent 0)`,
             backgroundSize: '40px 40px',
           }} />
         </div>
@@ -254,7 +254,7 @@ export default function SignupPage() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="relative z-10 max-w-lg"
         >
-          <h2 className="text-3xl font-bold text-white mb-8">
+          <h2 className="text-3xl font-bold text-slate-900 mb-8">
             Join the storytelling movement
           </h2>
 
@@ -263,7 +263,7 @@ export default function SignupPage() {
               {
                 icon: Globe,
                 title: "Discover Heroes",
-                description: "Find and document environmental changemakers in your community.",
+                description: "Find and document health, cultural, and environmental leaders in your community.",
                 color: "emerald",
               },
               {
@@ -286,20 +286,20 @@ export default function SignupPage() {
                   initial={{ opacity: 0, x: 30 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.3 + index * 0.1 }}
-                  className="flex items-start gap-4 p-4 rounded-xl bg-slate-800/50 border border-slate-700"
+                  className="flex items-start gap-4 p-4 rounded-xl bg-white/50 border border-slate-200"
                 >
                   <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
                     item.color === "emerald"
-                      ? "bg-emerald-500/20 text-emerald-400"
+                      ? "bg-sky-100 text-sky-600"
                       : item.color === "blue"
-                      ? "bg-blue-500/20 text-blue-400"
-                      : "bg-purple-500/20 text-purple-400"
+                      ? "bg-emerald-100 text-emerald-600"
+                      : "bg-indigo-100 text-indigo-600"
                   }`}>
                     <Icon className="w-5 h-5" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-white">{item.title}</h3>
-                    <p className="text-sm text-slate-400 mt-1">{item.description}</p>
+                    <h3 className="font-semibold text-slate-900">{item.title}</h3>
+                    <p className="text-sm text-slate-600 mt-1">{item.description}</p>
                   </div>
                 </motion.div>
               )
@@ -310,3 +310,4 @@ export default function SignupPage() {
     </div>
   )
 }
+

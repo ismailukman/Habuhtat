@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { motion } from "framer-motion"
 import { MapPin, Calendar, ArrowRight, Sparkles, TrendingUp } from "lucide-react"
@@ -38,15 +38,14 @@ export function ProfileCard({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       whileHover={{ y: -4 }}
-      className="group rounded-xl bg-slate-800/50 border border-slate-700 overflow-hidden hover:border-slate-600 transition-all"
+      className="group rounded-xl bg-white border border-slate-200 overflow-hidden hover:border-sky-200 transition-all shadow-sm"
     >
-      {/* Image */}
-      <div className="relative h-48 bg-gradient-to-br from-slate-700 to-slate-800 overflow-hidden">
+      <div className="relative h-48 bg-gradient-to-br from-slate-100 to-slate-200 overflow-hidden">
         {imageUrl ? (
           <img src={imageUrl} alt={heroName} className="w-full h-full object-cover" />
         ) : (
           <div className="w-full h-full flex items-center justify-center">
-            <span className="text-6xl">🌱</span>
+            <span className="text-6xl text-slate-300">dYOñ</span>
           </div>
         )}
         <div className="absolute top-3 right-3">
@@ -54,34 +53,33 @@ export function ProfileCard({
         </div>
       </div>
 
-      {/* Content */}
       <div className="p-5">
-        <h3 className="text-lg font-semibold text-white mb-2 group-hover:text-emerald-400 transition-colors">
+        <h3 className="text-lg font-semibold text-slate-900 mb-2 group-hover:text-sky-600 transition-colors">
           {heroName}
         </h3>
 
         <div className="space-y-2 mb-4">
-          <div className="flex items-center gap-2 text-sm text-slate-400">
+          <div className="flex items-center gap-2 text-sm text-slate-500">
             <MapPin className="w-4 h-4" />
             <span>{country ? `${location}, ${country}` : location}</span>
           </div>
-          <div className="flex items-center gap-2 text-sm text-slate-400">
+          <div className="flex items-center gap-2 text-sm text-slate-500">
             <Calendar className="w-4 h-4" />
             <span>{createdAt}</span>
           </div>
         </div>
 
         {(summary || impact) && (
-          <div className="space-y-2 mb-4 text-sm text-slate-300">
+          <div className="space-y-2 mb-4 text-sm text-slate-600">
             {summary && (
               <div className="flex items-start gap-2">
-                <Sparkles className="w-4 h-4 mt-0.5 text-emerald-400" />
+                <Sparkles className="w-4 h-4 mt-0.5 text-sky-500" />
                 <p className="line-clamp-2">{summary}</p>
               </div>
             )}
             {impact && (
               <div className="flex items-start gap-2">
-                <TrendingUp className="w-4 h-4 mt-0.5 text-blue-400" />
+                <TrendingUp className="w-4 h-4 mt-0.5 text-emerald-500" />
                 <p className="line-clamp-2">{impact}</p>
               </div>
             )}
