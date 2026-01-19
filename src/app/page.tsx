@@ -342,23 +342,35 @@ export default function LandingPage() {
             </div>
 
             <motion.div
-              animate={{ y: [0, -10, 0] }}
-              transition={{ repeat: Infinity, duration: 3 }}
-              className="absolute -top-4 -left-4 w-44 h-28 bg-white border border-slate-200 rounded-xl p-4 shadow-lg"
+              animate={{ y: [0, -8, 0] }}
+              transition={{ repeat: Infinity, duration: 4 }}
+              className="absolute -top-6 -left-6 w-56 bg-white border border-slate-200 rounded-2xl p-4 shadow-lg"
             >
-              <div className="text-xs text-slate-500 mb-1">Success Story</div>
-              <div className="text-base font-semibold text-slate-900">Maria's Forest</div>
-              <div className="text-sm text-emerald-600 mt-1">+50k Trees Planted</div>
+              <div className="text-xs uppercase tracking-widest text-slate-500">Impact Snapshot</div>
+              <div className="mt-3 text-lg font-semibold text-slate-900">Community Medicine</div>
+              <p className="mt-2 text-sm text-slate-600">
+                2,300 residents reached with free screenings and follow-up care.
+              </p>
+              <div className="mt-3 flex items-center gap-2 text-xs text-slate-500">
+                <span className="px-2 py-1 rounded-full bg-sky-100 text-sky-700">Health</span>
+                <span className="px-2 py-1 rounded-full bg-emerald-100 text-emerald-700">Care</span>
+              </div>
             </motion.div>
 
             <motion.div
               animate={{ y: [0, 10, 0] }}
-              transition={{ repeat: Infinity, duration: 3, delay: 0.5 }}
-              className="absolute -bottom-4 -right-4 w-44 h-28 bg-white border border-slate-200 rounded-xl p-4 shadow-lg"
+              transition={{ repeat: Infinity, duration: 4.5, delay: 0.5 }}
+              className="absolute -bottom-6 -right-6 w-56 bg-white border border-slate-200 rounded-2xl p-4 shadow-lg"
             >
-              <div className="text-xs text-slate-500 mb-1">Impact</div>
-              <div className="text-base font-semibold text-slate-900">Clean Water</div>
-              <div className="text-sm text-sky-600 mt-1">10k Lives Changed</div>
+              <div className="text-xs uppercase tracking-widest text-slate-500">Culture Spotlight</div>
+              <div className="mt-3 text-lg font-semibold text-slate-900">Heritage Archive</div>
+              <p className="mt-2 text-sm text-slate-600">
+                120 oral histories preserved for schools and community museums.
+              </p>
+              <div className="mt-3 flex items-center gap-2 text-xs text-slate-500">
+                <span className="px-2 py-1 rounded-full bg-indigo-100 text-indigo-700">Culture</span>
+                <span className="px-2 py-1 rounded-full bg-slate-100 text-slate-700">Legacy</span>
+              </div>
             </motion.div>
           </motion.div>
         </div>
