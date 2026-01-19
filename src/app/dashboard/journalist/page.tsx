@@ -219,16 +219,19 @@ export default function JournalistDashboard() {
                 >
                   <ProfileCard
                     id={claim.id}
-                    heroName={claim.heroName}
-                    location={claim.location}
-                    category={claim.category}
-                    status={claim.status}
-                    createdAt={formatDate(claim.createdAt)}
-                    imageUrl={claim.imageUrl}
-                    actionLabel="Continue"
-                  />
-                </motion.div>
-              ))}
+                  heroName={claim.heroName}
+                  location={claim.location}
+                  country={claim.country}
+                  category={claim.category}
+                  status={claim.status}
+                  createdAt={formatDate(claim.createdAt)}
+                  imageUrl={claim.imageUrl}
+                  summary={claim.summary}
+                  impact={claim.impact}
+                  actionLabel="Continue"
+                />
+              </motion.div>
+            ))}
             </div>
           </motion.div>
         )}
@@ -273,10 +276,13 @@ export default function JournalistDashboard() {
                   id={profile.id}
                   heroName={profile.heroName}
                   location={profile.location}
+                  country={profile.country}
                   category={profile.category}
                   status={profile.status}
                   createdAt={formatDate(profile.createdAt)}
                   imageUrl={profile.imageUrl}
+                  summary={profile.summary}
+                  impact={profile.impact}
                   onAction={() => handleClaim(profile.id)}
                   actionLabel={claimingId === profile.id ? "Claiming..." : "Claim"}
                 />

@@ -1,7 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { MapPin, Calendar, ArrowRight } from "lucide-react"
+import { MapPin, Calendar, ArrowRight, Sparkles, TrendingUp } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { MotionButton } from "@/components/ui/button"
 
@@ -9,10 +9,13 @@ interface ProfileCardProps {
   id: string
   heroName: string
   location: string
+  country?: string
   category: string
   status: "draft" | "review" | "claimed" | "story_submitted" | "ai_generated" | "approved" | "scheduled" | "published"
   createdAt: string
   imageUrl?: string
+  summary?: string
+  impact?: string
   onAction?: () => void
   actionLabel?: string
 }
@@ -20,10 +23,13 @@ interface ProfileCardProps {
 export function ProfileCard({
   heroName,
   location,
+  country,
   category,
   status,
   createdAt,
   imageUrl,
+  summary,
+  impact,
   onAction,
   actionLabel = "View Details",
 }: ProfileCardProps) {
@@ -57,13 +63,30 @@ export function ProfileCard({
         <div className="space-y-2 mb-4">
           <div className="flex items-center gap-2 text-sm text-slate-400">
             <MapPin className="w-4 h-4" />
-            <span>{location}</span>
+            <span>{country ? `${location}, ${country}` : location}</span>
           </div>
           <div className="flex items-center gap-2 text-sm text-slate-400">
             <Calendar className="w-4 h-4" />
             <span>{createdAt}</span>
           </div>
         </div>
+
+        {(summary || impact) && (
+          <div className="space-y-2 mb-4 text-sm text-slate-300">
+            {summary && (
+              <div className="flex items-start gap-2">
+                <Sparkles className="w-4 h-4 mt-0.5 text-emerald-400" />
+                <p className="line-clamp-2">{summary}</p>
+              </div>
+            )}
+            {impact && (
+              <div className="flex items-start gap-2">
+                <TrendingUp className="w-4 h-4 mt-0.5 text-blue-400" />
+                <p className="line-clamp-2">{impact}</p>
+              </div>
+            )}
+          </div>
+        )}
 
         <div className="flex items-center justify-between">
           <Badge variant="secondary">{category}</Badge>

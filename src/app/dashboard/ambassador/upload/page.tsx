@@ -32,6 +32,19 @@ const initialFormState: UploadFormState = {
   contactPhone: "",
 }
 
+const CATEGORY_OPTIONS = [
+  "Clean Water",
+  "Reforestation",
+  "Wildlife Conservation",
+  "Waste Reduction",
+  "Renewable Energy",
+  "Air Quality",
+  "Sustainable Agriculture",
+  "Ocean Cleanup",
+  "Climate Education",
+  "Other",
+]
+
 export default function AmbassadorHeroUploadPage() {
   const { profile } = useAuth()
   const [formState, setFormState] = useState<UploadFormState>(initialFormState)
@@ -152,11 +165,18 @@ export default function AmbassadorHeroUploadPage() {
                 </div>
                 <div>
                   <label className="text-sm text-slate-300">Category *</label>
-                  <Input
+                  <select
                     value={formState.category}
                     onChange={(event) => handleChange("category", event.target.value)}
-                    placeholder="Reforestation, Clean Water, etc."
-                  />
+                    className="mt-1 w-full rounded-lg border border-slate-700 bg-slate-900 px-4 py-2 text-sm text-slate-50"
+                  >
+                    <option value="">Select a category</option>
+                    {CATEGORY_OPTIONS.map((option) => (
+                      <option key={option} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </select>
                 </div>
                 <div>
                   <label className="text-sm text-slate-300">Location *</label>

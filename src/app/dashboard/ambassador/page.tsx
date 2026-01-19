@@ -188,10 +188,13 @@ export default function AmbassadorDashboard() {
                   id={submission.id}
                   heroName={submission.heroName}
                   location={submission.location}
+                  country={submission.country}
                   category={submission.category}
                   status={submission.status}
                   createdAt={formatDate(submission.createdAt)}
                   imageUrl={submission.imageUrl}
+                  summary={submission.summary}
+                  impact={submission.impact}
                   actionLabel="View"
                 />
               </motion.div>
