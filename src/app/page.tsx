@@ -1,7 +1,7 @@
 ﻿"use client"
 
-import { motion, useScroll, useTransform } from "framer-motion"
-import { useRef } from "react"
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
+import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
 import {
   Upload,
@@ -81,12 +81,53 @@ const features = [
   },
 ]
 
+const localImpactCards = [
+  {
+    title: "Community Medicine",
+    body: "2,300 residents reached with free screenings and follow-up care.",
+    tags: ["Health", "Care"],
+    tone: "sky",
+  },
+  {
+    title: "Heritage Archive",
+    body: "120 oral histories preserved for schools and community museums.",
+    tags: ["Culture", "Legacy"],
+    tone: "indigo",
+  },
+  {
+    title: "Youth Enterprise",
+    body: "180 apprentices placed into paid roles with local businesses.",
+    tags: ["Business", "Opportunity"],
+    tone: "emerald",
+  },
+  {
+    title: "Food Resilience",
+    body: "900 households supported through coastal food networks.",
+    tags: ["Community", "Resilience"],
+    tone: "sky",
+  },
+  {
+    title: "Climate Learning",
+    body: "8,500 students completed climate action projects.",
+    tags: ["Education", "Youth"],
+    tone: "indigo",
+  },
+]
+
 export default function LandingPage() {
   const { scrollYProgress } = useScroll()
   const heroRef = useRef(null)
+  const [localCard, setLocalCard] = useState(0)
 
   const heroY = useTransform(scrollYProgress, [0, 0.3], [0, -50])
   const heroOpacity = useTransform(scrollYProgress, [0, 0.2], [1, 0])
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setLocalCard((prev) => (prev + 1) % localImpactCards.length)
+    }, 4200)
+    return () => clearInterval(timer)
+  }, [])
 
   return (
     <div className="relative bg-slate-50 text-slate-900 overflow-hidden">
@@ -328,50 +369,66 @@ export default function LandingPage() {
             transition={{ duration: 0.6 }}
             className="relative"
           >
-            <div className="relative aspect-square rounded-2xl overflow-hidden bg-gradient-to-br from-slate-100 to-slate-200 border border-slate-200">
-              <div className="absolute inset-0 bg-gradient-to-br from-sky-200/40 to-emerald-100/40" />
-              <div className="absolute inset-0 flex items-center justify-center">
+            <div className="relative h-[320px]">
+              <AnimatePresence mode="wait">
                 <motion.div
-                  animate={{ scale: [1, 1.1, 1] }}
-                  transition={{ repeat: Infinity, duration: 3 }}
-                  className="text-8xl text-slate-300"
+                  key={localCard}
+                  initial={{ opacity: 0, x: 30 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -30 }}
+                  transition={{ duration: 0.35 }}
+                  className="absolute inset-0"
                 >
-                  dYOñ
+                  <div className="rounded-3xl border border-slate-200 bg-white shadow-xl p-6">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs uppercase tracking-widest text-slate-500">Local Impact</span>
+                      <span
+                        className={`h-2.5 w-2.5 rounded-full ${
+                          localImpactCards[localCard].tone === "emerald"
+                            ? "bg-emerald-500"
+                            : localImpactCards[localCard].tone === "indigo"
+                            ? "bg-indigo-500"
+                            : "bg-sky-500"
+                        }`}
+                      />
+                    </div>
+                    <h3 className="text-2xl font-semibold text-slate-900 mt-4">
+                      {localImpactCards[localCard].title}
+                    </h3>
+                    <p className="text-slate-600 mt-3">{localImpactCards[localCard].body}</p>
+                    <div className="mt-6 flex flex-wrap items-center gap-2 text-sm text-slate-500">
+                      {localImpactCards[localCard].tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className={`px-3 py-1 rounded-full ${
+                            localImpactCards[localCard].tone === "emerald"
+                              ? "bg-emerald-100 text-emerald-700"
+                              : localImpactCards[localCard].tone === "indigo"
+                              ? "bg-indigo-100 text-indigo-700"
+                              : "bg-sky-100 text-sky-700"
+                          }`}
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
                 </motion.div>
+              </AnimatePresence>
+
+              <div className="absolute -bottom-6 left-0 right-0 flex justify-center gap-2">
+                {localImpactCards.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setLocalCard(index)}
+                    className={`h-2 rounded-full transition-all ${
+                      index === localCard ? "w-10 bg-sky-500" : "w-3 bg-slate-300"
+                    }`}
+                    aria-label={`View impact card ${index + 1}`}
+                  />
+                ))}
               </div>
             </div>
-
-            <motion.div
-              animate={{ y: [0, -8, 0] }}
-              transition={{ repeat: Infinity, duration: 4 }}
-              className="absolute -top-6 -left-6 w-56 bg-white border border-slate-200 rounded-2xl p-4 shadow-lg"
-            >
-              <div className="text-xs uppercase tracking-widest text-slate-500">Impact Snapshot</div>
-              <div className="mt-3 text-lg font-semibold text-slate-900">Community Medicine</div>
-              <p className="mt-2 text-sm text-slate-600">
-                2,300 residents reached with free screenings and follow-up care.
-              </p>
-              <div className="mt-3 flex items-center gap-2 text-xs text-slate-500">
-                <span className="px-2 py-1 rounded-full bg-sky-100 text-sky-700">Health</span>
-                <span className="px-2 py-1 rounded-full bg-emerald-100 text-emerald-700">Care</span>
-              </div>
-            </motion.div>
-
-            <motion.div
-              animate={{ y: [0, 10, 0] }}
-              transition={{ repeat: Infinity, duration: 4.5, delay: 0.5 }}
-              className="absolute -bottom-6 -right-6 w-56 bg-white border border-slate-200 rounded-2xl p-4 shadow-lg"
-            >
-              <div className="text-xs uppercase tracking-widest text-slate-500">Culture Spotlight</div>
-              <div className="mt-3 text-lg font-semibold text-slate-900">Heritage Archive</div>
-              <p className="mt-2 text-sm text-slate-600">
-                120 oral histories preserved for schools and community museums.
-              </p>
-              <div className="mt-3 flex items-center gap-2 text-xs text-slate-500">
-                <span className="px-2 py-1 rounded-full bg-indigo-100 text-indigo-700">Culture</span>
-                <span className="px-2 py-1 rounded-full bg-slate-100 text-slate-700">Legacy</span>
-              </div>
-            </motion.div>
           </motion.div>
         </div>
       </section>
